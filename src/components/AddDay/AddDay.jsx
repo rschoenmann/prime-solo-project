@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, TextField, Button, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText} from '@material-ui/core';
+import {Star, StarBorder} from '@material-ui/icons';
+import Rating from 'material-ui-rating';
 
 class AddDay extends Component {
 
 	state = {
-		check1: false,
-		check2: false,
-		check3: false,
-		check4: false,
-		check5: false,
+		1: false,
+		2: false,
+		3: false,
+		4: false,
+		5: false,
+		rating: 0,
+		notes: ''
 	}
 
 	componentDidMount(){
@@ -17,15 +21,20 @@ class AddDay extends Component {
 		this.props.dispatch({type: 'FETCH_PROMPT'})
 	}
 
-	handleCheck = (id) => {
-		// this.setState({
-		// 	...state,
-		// 	[id]: !this.state
-		// })
-	}
+	handleCheck = (promptid) => {
+		//promptid passed in from anonymous function from checkbox onChange
+		//will use that to determine which key to change in state
+		console.log('promptid', promptid)
+		this.setState({
+			[promptid]: !this.state[promptid]
+		})
+		// console.log('this.state.promptid', this.state)
+	};//end handleCheck
 
 	render(){
-		console.log('this.state', this.state)
+		console.log('this.state', this.state);
+		// set a variable for this.state.{prompt.id} in order to toggle isChecked
+		let isChecked;
 		return(
 			<div>
 					<FormControl>
@@ -40,14 +49,22 @@ class AddDay extends Component {
 								InputLabelProps={{ shrink: true }} />
 							<br></br><br></br>
 							{this.props.prompt.map((prompt) => {
+								// isChecked = prompt.id;
+								const id = prompt.id
 								return(
-									<div key={prompt.id}>
-										<FormControlLabel control={<Checkbox  
-											onChange={this.handleCheck(prompt.id)} value={prompt.id} color="primary"/>}
+										<FormControlLabel key={prompt.id} control={
+											<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} checked={this.state[id]} color="primary"/>}
 											label={prompt.prompt} />
-									</div>
-								)
-							})}
+									)
+								})}
+						<Rating 
+							onChange={() => this.handleRating()} value={this.state.rating}/>
+						<TextField
+							id="standard-multiline-static"
+							label="Any notes to add? (optional)"
+							multiline rows="2"
+							placeholder="notes"
+							margin="normal"/>
 						</FormGroup>
 						<FormHelperText>Be careful</FormHelperText>
 					</FormControl>
