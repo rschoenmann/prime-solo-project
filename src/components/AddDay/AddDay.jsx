@@ -13,7 +13,7 @@ class AddDay extends Component {
 		3: false,
 		4: false,
 		5: false,
-		rating: 0,
+		value: 0,
 		notes: ''
 	}
 
@@ -32,17 +32,15 @@ class AddDay extends Component {
 		// console.log('this.state.promptid', this.state)
 	};//end handleCheck
 
-	handleRating = (event) => {
-		console.log('rating!')
+	handleRating = (value) => {
+		// console.log('rating value:', value)
+		this.setState({
+			value: value
+		})
 	};//end handleRating
 
 	render(){
 		console.log('this.state', this.state);
-		// set a variable for this.state.{prompt.id} in order to toggle isChecked
-		// const SVGIcon = (props) =>{
-		// 	<svg className={props.className} pointerEvents="none">
-		// 					<use xlinkHref={props.href} />
-		// 				</svg>;}
 		return(
 			<div>
 					<FormControl>
@@ -69,7 +67,9 @@ class AddDay extends Component {
 						<Rating
 							onChange={() => this.handleRating()} 
 							emptySymbol={<StarBorder />}
-							fullSymbol={<Star />}/>
+							fullSymbol={<Star />}
+							initialRating={this.state.value}
+							start={0} stop={5}/>
 
 						<TextField
 							id="standard-multiline-static"
