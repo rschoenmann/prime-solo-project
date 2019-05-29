@@ -8,7 +8,9 @@ const reviewReducer = (state=review, action) => {
 		case 'SET_REVIEW_RATING':
 			return {...state, value: action.payload};
 		case 'SET_REVIEW_NOTES':
-			return {...state, notes: action.payload}
+			return {...state, notes: action.payload};
+		case 'CLEAR_REVIEW':
+			return {};
 		default:
 			return state;
 	}

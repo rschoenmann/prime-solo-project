@@ -23,9 +23,19 @@ class AddDay extends Component {
 		this.props.dispatch({type: 'SET_REVIEW_NOTES', payload: event.target.value})
 	};//end handleNotes
 
+	handleSubmit = () => {
+		//only allow submission of day if user has filled out starRating
+		if(this.props.review.value != 0){
+			this.props.dispatch({type: 'ADD_REVIEW', payload: this.props.review})
+		}else{
+			alert('DO THE RATING!')
+		}
+	};//end handleSubmit
+
 	render(){
 		console.log('this.state', this.state);
 		return(
+			<>
 			<FormControl>
 				<FormLabel>ENTER DATA</FormLabel>
 				<br></br>
@@ -41,9 +51,10 @@ class AddDay extends Component {
 						// isChecked = prompt.id;
 						const id = prompt.id
 						return(
-								<FormControlLabel key={prompt.id} control={
-									<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} checked={this.props.review[id]} color="primary"/>}
-									label={prompt.prompt} />
+								<FormControlLabel key={prompt.id} 
+								control={<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} 
+								checked={this.props.review[id]} color="primary"/>}
+								label={prompt.prompt} />
 							)
 						})}
 
@@ -56,14 +67,16 @@ class AddDay extends Component {
 					multiline rowsMax="3"
 					placeholder="notes"
 					margin="normal"/>
-				</FormGroup>
-				<FormHelperText>Be careful</FormHelperText>
 
-				<Button variant="contained" color="primary">
-					Submit Day</Button>
+				</FormGroup>
+				{/* <FormHelperText>Be careful</FormHelperText> */}
 
 				<pre>{JSON.stringify(this.props.review)}</pre>
 			</FormControl>
+				<br></br>
+			<Button variant="contained" color="primary" onClick={this.handleSubmit}>
+				Submit Day</Button>
+			</>
 		)
 	}
 }
