@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-  HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import {HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 
@@ -14,8 +9,8 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
+import Dashboard from '../Dashboard/Dashboard';
 import AddDay from '../AddDay/AddDay';
 import Profile from '../Profile/Profile';
 
@@ -45,7 +40,7 @@ class App extends Component {
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
             <ProtectedRoute
             	exact path="/home"
-            	component={UserPage}/>
+            	component={Dashboard}/>
 
             <ProtectedRoute 
 				exact path="/addDay"

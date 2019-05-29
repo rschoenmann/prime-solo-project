@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, TextField, Button, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText, IconButton} from '@material-ui/core';
+import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import Rating from 'react-rating';
 
 class AddDay extends Component {
