@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, TextField, Button, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText} from '@material-ui/core';
+import {Checkbox, TextField, Button, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText, IconButton} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
-import Rating from 'material-ui-rating';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Rating from 'react-rating';
 
 class AddDay extends Component {
 
@@ -31,10 +32,17 @@ class AddDay extends Component {
 		// console.log('this.state.promptid', this.state)
 	};//end handleCheck
 
+	handleRating = (event) => {
+		console.log('rating!')
+	};//end handleRating
+
 	render(){
 		console.log('this.state', this.state);
 		// set a variable for this.state.{prompt.id} in order to toggle isChecked
-		let isChecked;
+		// const SVGIcon = (props) =>{
+		// 	<svg className={props.className} pointerEvents="none">
+		// 					<use xlinkHref={props.href} />
+		// 				</svg>;}
 		return(
 			<div>
 					<FormControl>
@@ -57,8 +65,12 @@ class AddDay extends Component {
 											label={prompt.prompt} />
 									)
 								})}
-						<Rating 
-							onChange={() => this.handleRating()} value={this.state.rating}/>
+
+						<Rating
+							onChange={() => this.handleRating()} 
+							emptySymbol={<StarBorder />}
+							fullSymbol={<Star />}/>
+
 						<TextField
 							id="standard-multiline-static"
 							label="Any notes to add? (optional)"
