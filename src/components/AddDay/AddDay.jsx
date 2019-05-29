@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText} from '@material-ui/core';
-import {Star, StarBorder} from '@material-ui/icons';
-import Rating from 'react-rating';
+import StarRating from '../StarRating/StarRating';
 
 class AddDay extends Component {
 
@@ -19,7 +18,7 @@ class AddDay extends Component {
 	componentDidMount(){
 		//fetch prompts to populate questions
 		this.props.dispatch({type: 'FETCH_PROMPT'})
-	}
+	};//end componentDidMount
 
 	handleCheck = (promptid) => {
 		//promptid passed in from anonymous function from checkbox onChange
@@ -31,55 +30,57 @@ class AddDay extends Component {
 		// console.log('this.state.promptid', this.state)
 	};//end handleCheck
 
-	handleRating = (value) => {
-		// console.log('rating value:', value)
+	handleNotes = (event) => {
+		console.log('event.target.value:', event.target.value)
 		this.setState({
-			value: value
+			notes: event.target.value
 		})
-	};//end handleRating
+	};//end handleNotes
+
+	ratingChange = (starValue) => {
+		console.log('ratingChange value', starValue);
+		this.setState({
+			value: starValue
+		})
+	};//end ratingChange
 
 	render(){
 		console.log('this.state', this.state);
 		return(
-			<div>
-					<FormControl>
-						<FormLabel>ENTER DATA</FormLabel>
-						<br></br>
-						<FormGroup>
-							<TextField
-								id="date"
-								label="Date"
-								type="date"
-								defaultValue="2019-05-28"
-								InputLabelProps={{ shrink: true }} />
-							<br></br><br></br>
-							{this.props.prompt.map((prompt) => {
-								// isChecked = prompt.id;
-								const id = prompt.id
-								return(
-										<FormControlLabel key={prompt.id} control={
-											<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} checked={this.state[id]} color="primary"/>}
-											label={prompt.prompt} />
-									)
-								})}
+			<FormControl>
+				<FormLabel>ENTER DATA</FormLabel>
+				<br></br>
+				<FormGroup>
+					<TextField
+						id="date"
+						label="Date"
+						type="date"
+						defaultValue="2019-05-28"
+						InputLabelProps={{shrink: true}} />
+					<br></br><br></br>
+					{this.props.prompt.map((prompt) => {
+						// isChecked = prompt.id;
+						const id = prompt.id
+						return(
+								<FormControlLabel key={prompt.id} control={
+									<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} checked={this.state[id]} color="primary"/>}
+									label={prompt.prompt} />
+							)
+						})}
 
-						<Rating
-							onChange={() => this.handleRating()} 
-							emptySymbol={<StarBorder />}
-							fullSymbol={<Star />}
-							initialRating={this.state.value}
-							start={0} stop={5}/>
+				<StarRating onChange={this.ratingChange}/>
 
-						<TextField
-							id="standard-multiline-static"
-							label="Any notes to add? (optional)"
-							multiline rows="2"
-							placeholder="notes"
-							margin="normal"/>
-						</FormGroup>
-						<FormHelperText>Be careful</FormHelperText>
-					</FormControl>
-			</div>
+				<TextField
+					onChange={this.handleNotes}
+					id="standard-multiline-static"
+					label="Any notes to add? (optional)"
+					multiline rowsMax="3"
+					placeholder="notes"
+					fullWidth="false"
+					margin="normal"/>
+				</FormGroup>
+				<FormHelperText>Be careful</FormHelperText>
+			</FormControl>
 		)
 	}
 }

@@ -4,7 +4,10 @@ import {connect} from 'react-redux';
 class Dashboard extends Component {
 	render() {
 		return (
-			<p>Dashboard</p>
+			<div>
+				<p>Dashboard</p>
+				<button>Add a new day</button>
+			</div>
 		)
 	}
 }
