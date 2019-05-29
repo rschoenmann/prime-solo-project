@@ -1,28 +1,25 @@
 import React, {Component} from 'react';
 import Rating from 'react-rating';
 import {Star, StarBorder} from '@material-ui/icons';
+import {connect} from 'react-redux';
 
 class StarRating extends Component{
 
-	//need to set local state to hold rating value via initialRating props and handleRating setState, 
-	//otherwise the rating would reset itself anytime the AddDay form refreshed (if user changes checkboxes, etc)
 	state = {
+		//need to set local state in order to give initialRating a starting value
 		value: 0
 	}
 
-	handleRating = (value) => {
-	console.log('rating value:', value)
-	this.setState({
-		value: value
-	})
-	this.props.onChange(value);
+	handleRating = (starValue) => {
+	console.log('rating value:', starValue)
+	//sending starValue to review reducer to store in a single 'review' state
+	this.props.dispatch({type: 'SET_REVIEW_RATING', payload: starValue})
 	};//end handleRating
-
 
 	render(){
 		return(
 			<Rating
-				initialRating={this.props.value}
+				initialRating={this.state.value}
 				onChange={this.handleRating}
 				emptySymbol={<StarBorder />}
 				fullSymbol={<Star />}
@@ -31,4 +28,4 @@ class StarRating extends Component{
 	}
 }
 
-export default StarRating;
+export default connect()(StarRating);

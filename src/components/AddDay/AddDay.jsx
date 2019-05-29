@@ -1,19 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText} from '@material-ui/core';
+import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText, Button} from '@material-ui/core';
 import StarRating from '../StarRating/StarRating';
 
 class AddDay extends Component {
-
-	state = {
-		1: false,
-		2: false,
-		3: false,
-		4: false,
-		5: false,
-		value: 0,
-		notes: ''
-	}
 
 	componentDidMount(){
 		//fetch prompts to populate questions
@@ -21,28 +11,17 @@ class AddDay extends Component {
 	};//end componentDidMount
 
 	handleCheck = (promptid) => {
+		//console.log('promptid', promptid)
 		//promptid passed in from anonymous function from checkbox onChange
-		//will use that to determine which key to change in state
-		console.log('promptid', promptid)
-		this.setState({
-			[promptid]: !this.state[promptid]
-		})
-		// console.log('this.state.promptid', this.state)
+		//will use that to determine which key to change in reviewReducer state
+		this.props.dispatch({type: 'SET_REVIEW_CHECK', payload: promptid})
 	};//end handleCheck
 
 	handleNotes = (event) => {
-		console.log('event.target.value:', event.target.value)
-		this.setState({
-			notes: event.target.value
-		})
+		//console.log('event.target.value:', event.target.value)
+		//dispatching event.target.value to store in reviewReducer state
+		this.props.dispatch({type: 'SET_REVIEW_NOTES', payload: event.target.value})
 	};//end handleNotes
-
-	ratingChange = (starValue) => {
-		console.log('ratingChange value', starValue);
-		this.setState({
-			value: starValue
-		})
-	};//end ratingChange
 
 	render(){
 		console.log('this.state', this.state);
@@ -63,12 +42,12 @@ class AddDay extends Component {
 						const id = prompt.id
 						return(
 								<FormControlLabel key={prompt.id} control={
-									<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} checked={this.state[id]} color="primary"/>}
+									<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} checked={this.props.review[id]} color="primary"/>}
 									label={prompt.prompt} />
 							)
 						})}
 
-				<StarRating onChange={this.ratingChange}/>
+				<StarRating />
 
 				<TextField
 					onChange={this.handleNotes}
@@ -76,10 +55,14 @@ class AddDay extends Component {
 					label="Any notes to add? (optional)"
 					multiline rowsMax="3"
 					placeholder="notes"
-					fullWidth="false"
 					margin="normal"/>
 				</FormGroup>
 				<FormHelperText>Be careful</FormHelperText>
+
+				<Button variant="contained" color="primary">
+					Submit Day</Button>
+
+				<pre>{JSON.stringify(this.props.review)}</pre>
 			</FormControl>
 		)
 	}
@@ -87,7 +70,7 @@ class AddDay extends Component {
 
 const mapStateToProps = state => ({
 	prompt: state.prompt,
-
+	review: state.review
 });
 
 export default connect(mapStateToProps)(AddDay);
