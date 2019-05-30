@@ -43,12 +43,12 @@ class App extends Component {
             	component={Dashboard}/>
 
             <ProtectedRoute 
-				exact path="/addDay"
-				component={AddDay} />
+      				exact path="/addDay"
+      				component={AddDay} />
 
-			<ProtectedRoute
-				exact path="/profile"
-				component={Profile} />
+      			<ProtectedRoute
+      				exact path="/profile"
+      				component={Profile} />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
             <ProtectedRoute

@@ -9,7 +9,7 @@ function* addReview(action) {
 		console.log('Day post failed', error);
 	}
 }
-function* promptSaga() {
+function* reviewSaga() {
 	yield takeLatest('ADD_REVIEW', addReview);
 }
 

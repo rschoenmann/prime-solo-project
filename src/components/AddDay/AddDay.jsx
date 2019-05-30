@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText, Button} from '@material-ui/core';
 import StarRating from '../StarRating/StarRating';
+import Moment from 'react-moment';
 
 class AddDay extends Component {
 
 	componentDidMount(){
 		//fetch prompts to populate questions
 		this.props.dispatch({type: 'FETCH_PROMPT'})
+		this.props.dispatch({type: 'SET_REVIEW_DATE'})
 	};//end componentDidMount
 
 	handleCheck = (promptid) => {
@@ -25,7 +27,7 @@ class AddDay extends Component {
 
 	handleSubmit = () => {
 		//only allow submission of day if user has filled out starRating
-		if(this.props.review.value != 0){
+		if(this.props.review.value !== 0){
 			this.props.dispatch({type: 'ADD_REVIEW', payload: this.props.review})
 		}else{
 			alert('DO THE RATING!')
@@ -33,13 +35,13 @@ class AddDay extends Component {
 	};//end handleSubmit
 
 	render(){
-		console.log('this.state', this.state);
 		return(
 			<>
 			<FormControl>
 				<FormLabel>ENTER DATA</FormLabel>
 				<br></br>
 				<FormGroup>
+						<Moment local format="MM/DD/YYYY"></Moment>
 					<TextField
 						id="date"
 						label="Date"

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', rejectUnauthenticated, (req, res) => {
 	console.log('is authenticated?', req.isAuthenticated);
 	// select all columns from "prompt" table in database
-	let queryText = `SELECT * FROM "prompt";`
+	let queryText = `SELECT * FROM "prompt" ORDER BY "id";`
 	pool.query(queryText)
 	.then((result) =>{
 		console.log('prompt get result.rows:', result.rows);
