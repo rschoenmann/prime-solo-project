@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 class Dashboard extends Component {
+
+	componentDidMount(){
+		this.props.dispatch({type: 'FETCH_DAY'})
+	};//end componentDidMount
+
 	render() {
 		return (
 			<div>

@@ -42,12 +42,8 @@ class AddDay extends Component {
 				<br></br>
 				<FormGroup>
 						<Moment local format="MM/DD/YYYY"></Moment>
-					<TextField
-						id="date"
-						label="Date"
-						type="date"
-						defaultValue="2019-05-28"
-						InputLabelProps={{shrink: true}} />
+					{/* <TextField id="date" label="Date" type="date"
+						defaultValue="2019-05-28" InputLabelProps={{shrink: true}} /> */}
 					<br></br><br></br>
 					{this.props.prompt.map((prompt) => {
 						// isChecked = prompt.id;
