@@ -3,9 +3,17 @@ const pool = require('../modules/pool');
 const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-
-});
+router.get('/', rejectUnauthenticated, (req, res) => {
+	let queryText = `SELECT * FROM "review"
+		WHERE "review"."user_id" = $1 ORDER BY "date";`;
+	let queryValue = req.user.id
+	pool.query(queryText, [queryValue]).then((result) => {
+		console.log('day get results:', result.rows);
+		res.send(result.rows)
+	}).catch((error) => {
+		console.log('error in day GET:', error)
+	});
+});//end GET
 
 router.post('/', rejectUnauthenticated, (req, res) => {
 	console.log('Is authenticated?', req.isAuthenticated());
