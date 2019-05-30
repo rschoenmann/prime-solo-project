@@ -1,5 +1,5 @@
 const review =
-	{date: '', 1: null, 2: null, 3: null, 4: null, 5: null, value: 0, notes: ''};
+	{date: '', 1: false, 2: false, 3: false, 4: false, 5: false, value: 0, notes: ''};
 
 const reviewReducer = (state=review, action) => {
 	switch(action.type){
@@ -13,7 +13,7 @@ const reviewReducer = (state=review, action) => {
 			return {...state, date: action.payload}
 		//reset review to initial state so it's empty for next submission
 		case 'CLEAR_REVIEW':
-			return {};
+			return {date: '', 1: false, 2: false, 3: false, 4: false, 5: false, value: 0, notes: ''};
 		default:
 			return state;
 	}

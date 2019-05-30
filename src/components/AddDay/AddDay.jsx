@@ -28,7 +28,8 @@ class AddDay extends Component {
 	handleSubmit = () => {
 		//only allow submission of day if user has filled out starRating
 		if(this.props.review.value !== 0){
-			this.props.dispatch({type: 'ADD_REVIEW', payload: this.props.review})
+			this.props.dispatch({type: 'ADD_REVIEW', payload: this.props.review});
+			
 		}else{
 			alert('DO THE RATING!')
 		}
