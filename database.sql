@@ -26,13 +26,16 @@ CREATE TABLE "review" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INT REFERENCES "user",
 	"date" DATE DEFAULT CURRENT_DATE,
-	"prompt1" BOOLEAN,
-	"prompt2" BOOLEAN,
-	"prompt3" BOOLEAN,
-	"prompt4" BOOLEAN,
-	"prompt5" BOOLEAN,
+	"prompt_review_id" INT REFERENCES "prompt_review",
 	"rating" INT NOT NULL,
 	"notes" VARCHAR(200)
+	);
+
+	CREATE TABLE "prompt_review" (
+	"id" SERIAL PRIMARY KEY,
+	"prompt_id" INT REFERENCES "prompt",
+	"review_id" INT REFERENCES "review",
+	"answer" BOOLEAN
 	);
 
 
