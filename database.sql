@@ -22,5 +22,18 @@ CREATE TABLE "prompt" (
     "prompt" VARCHAR(100)
 );
 
+CREATE TABLE "review" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INT REFERENCES "user",
+	"date" DATE DEFAULT CURRENT_DATE,
+	"prompt1" BOOLEAN,
+	"prompt2" BOOLEAN,
+	"prompt3" BOOLEAN,
+	"prompt4" BOOLEAN,
+	"prompt5" BOOLEAN,
+	"rating" INT NOT NULL,
+	"notes" VARCHAR(200)
+	);
+
 
 
