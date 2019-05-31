@@ -3,8 +3,8 @@ import {put, takeLatest} from 'redux-saga/effects';
 
 function* addReview(action) {
 	try {
-		const response = yield axios.post('api/day', action.payload);
-		yield put({type: 'SET_DAY', payload: response.data});
+		yield axios.post('api/day', action.payload);
+		yield put({type: 'FETCH_DAY'});
 		//clear review reduxState after submitting so it's empty for next time
 		yield put({type: 'CLEAR_REVIEW'});
 	} catch (error) {
