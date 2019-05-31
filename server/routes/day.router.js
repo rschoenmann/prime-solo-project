@@ -4,8 +4,10 @@ const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
 
 router.get('/', rejectUnauthenticated, (req, res) => {
-	let queryText = `SELECT * FROM "review"
-		WHERE "review"."user_id" = $1 ORDER BY "date";`;
+	//long query string, but I wanted to give the id's aliases to make results easier to read
+	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", "prompt_review"."id" as prompt_reviewId, "prompt_review".prompt_id, "prompt_review".review_id, "prompt_review".answer FROM "review"
+		JOIN "prompt_review" ON "prompt_review".review_id = "review".id
+		WHERE "review".user_id = $1 ORDER BY "review".id, "prompt_review".id;`;
 	let queryValue = req.user.id
 	pool.query(queryText, [queryValue]).then((result) => {
 		console.log('day get results:', result.rows);
