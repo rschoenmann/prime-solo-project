@@ -4,10 +4,13 @@ const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
 
 router.get('/', rejectUnauthenticated, (req, res) => {
-	//long query string, but I wanted to give the id's aliases to make results easier to read
-	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", "prompt_review"."id" as prompt_reviewId, "prompt_review".prompt_id, "prompt_review".review_id, "prompt_review".answer FROM "review"
+	//json_agg and json_build_object solved the problem of trying to combine the data from two array_agg
+	//functions, and instead builds an array of objects with the data I need as key value pairs. Super cool.
+	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", json_agg(json_build_object('promptText', "prompt".prompt, 'prompt_review_answer', "prompt_review".answer)) as answers FROM "review"
 		JOIN "prompt_review" ON "prompt_review".review_id = "review".id
-		WHERE "review".user_id = $1 ORDER BY "review".id, "prompt_review".id;`;
+		JOIN "prompt" ON "prompt_review".prompt_id = "prompt".id
+		WHERE "review".user_id = $1
+		GROUP BY "review".id ORDER BY "review".id ASC;`;
 	let queryValue = req.user.id
 	pool.query(queryText, [queryValue]).then((result) => {
 		console.log('day get results:', result.rows);
