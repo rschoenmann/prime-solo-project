@@ -22,11 +22,15 @@ CREATE TABLE "prompt" (
     "prompt" VARCHAR(100)
 );
 
+INSERT INTO "prompt" ("prompt")
+VALUES ('Did you get enough sleep last night?'), 
+('Did you drink enough water today?'), ('Did you go outside today?'), 
+('Did you take your meds today?'), ('Did you talk to a friend today?');
+
 CREATE TABLE "review" (
 	"id" SERIAL PRIMARY KEY,
-	"user_id" INT REFERENCES "user",
 	"date" DATE DEFAULT CURRENT_DATE,
-	"prompt_review_id" INT REFERENCES "prompt_review",
+	"user_id" INT REFERENCES "user",
 	"rating" INT NOT NULL,
 	"notes" VARCHAR(200)
 	);
@@ -34,7 +38,7 @@ CREATE TABLE "review" (
 	CREATE TABLE "prompt_review" (
 	"id" SERIAL PRIMARY KEY,
 	"prompt_id" INT REFERENCES "prompt",
-	"review_id" INT REFERENCES "review",
+	"review_id" INT REFERENCES "review" ON DELETE CASCADE,
 	"answer" BOOLEAN
 	);
 

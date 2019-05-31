@@ -12,7 +12,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 		WHERE "review".user_id = $1
 		GROUP BY "review".id ORDER BY "review".id ASC;`;
 	let queryValue = req.user.id
-	pool.query(queryText, [queryValue]).then((result) => {
+	pool.query(queryText, [queryValue])
+	.then((result) => {
 		console.log('day get results:', result.rows);
 		res.send(result.rows)
 	}).catch((error) => {
@@ -55,6 +56,19 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 	}finally{
 		connection.release()
 	}
-});
+});//end POST
+
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+	console.log('is authenticated?', req.isAuthenticated());
+	console.log('req.params.id:', req.params.id);
+	let queryText = `DELETE FROM "review"
+		WHERE "review".id = $1 AND "review".user_id = $2;`;
+	pool.query(queryText, [req.params.id, req.user.id])
+	.then(() => {
+		res.sendStatus(200);
+	}).catch((error) => {
+		console.log('error in day DELETE:', error)
+	})
+});//end DELETE
 
 module.exports = router;

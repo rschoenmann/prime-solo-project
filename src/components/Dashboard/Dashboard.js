@@ -14,8 +14,9 @@ class Dashboard extends Component {
 		this.props.history.push('/addDay')
 	}
 
-	handleDelete = () => {
-		console.log('DELETE')
+	handleDelete = (dayid) => {
+		console.log('DELETE id:', dayid)
+		this.props.dispatch({type: 'DELETE_DAY', payload: dayid})
 	};//end handleDelete
 
 	handleEdit = () => {
@@ -25,15 +26,15 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<div>
-				{/* <pre>{JSON.stringify(this.props.day)}</pre> */}
+				<pre>{JSON.stringify(this.props.day)}</pre>
 				<h3>Dashboard!</h3>
 				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add New Day</Button>
 				<br></br><br></br>
 				<h3>Previous Days:</h3>
 				{this.props.day.map((aDay) => {
 					return(
-						<>
-						<Card key={aDay.id} raised>
+						<div key= {aDay.reviewid}>
+						<Card raised>
 						  <CardContent>
 							Date: {aDay.date}
 								{aDay.answers.map((answer, i) => {
@@ -51,11 +52,11 @@ class Dashboard extends Component {
 						  </CardContent>
 						  <CardActions>
 						    <Button variant="outlined" color="primary" onClick={this.handleEdit}>Edit Day</Button>
-							<Button variant="outlined" color="secondary" onClick={this.handleDelete}>Delete Day</Button>
+							<Button variant="outlined" color="secondary" onClick={() => this.handleDelete(aDay.reviewid)}>Delete Day</Button>
 						  </CardActions>
 						</Card>
 						<br></br><br></br>
-						</>
+						</div>
 					)
 				})}
 			</div>
