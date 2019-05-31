@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', rejectUnauthenticated, (req, res) => {
 	//json_agg and json_build_object solved the problem of trying to combine the data from two array_agg
 	//functions, and instead builds an array of objects with the data I need as key value pairs. Super cool.
-	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", json_agg(json_build_object('promptText', "prompt".prompt, 'prompt_review_answer', "prompt_review".answer)) as answers FROM "review"
+	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", json_agg(json_build_object('promptText', "prompt".prompt, 'promptAnswer', "prompt_review".answer)) as answers FROM "review"
 		JOIN "prompt_review" ON "prompt_review".review_id = "review".id
 		JOIN "prompt" ON "prompt_review".prompt_id = "prompt".id
 		WHERE "review".user_id = $1

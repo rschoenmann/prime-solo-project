@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Checkbox, Card, CardContent, CardActions, Button} from '@material-ui/core';
+
 
 
 // this could also be written with destructuring parameters as:
@@ -13,7 +15,7 @@ const Profile = (props) => (
 		<p>Default Color Gradient: {props.user.gradient_id}</p>
 		<p>GRADIENT EXAMPLE HERE</p>
 
-		<button >Edit Profile</button>
+		<Button variant="contained" color="primary">Edit Profile</Button>
 	
 	</div>
 );
