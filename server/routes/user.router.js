@@ -19,9 +19,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register', (req, res, next) => {  
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
+  const name = req.body.name;
+  const gradient = req.body.gradient;
 
-  const queryText = 'INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id';
-  pool.query(queryText, [username, password])
+  const queryText = 'INSERT INTO "user" (username, password, name, gradient_id) VALUES ($1, $2, $3, $4) RETURNING id';
+  pool.query(queryText, [username, password, name, gradient])
     .then(() => res.sendStatus(201))
     .catch(() => res.sendStatus(500));
 });

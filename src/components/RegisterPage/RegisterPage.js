@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {FormControl, InputLabel, Select, MenuItem, OutlinedInput} from '@material-ui/core';
 
 class RegisterPage extends Component {
   state = {
     username: '',
     password: '',
     name: '',
-    gradient: 0,
+    gradient_id: 0,
   };
 
   registerUser = (event) => {
@@ -19,7 +20,7 @@ class RegisterPage extends Component {
           username: this.state.username,
           password: this.state.password,
           name: this.state.name,
-          gradient: this.state.gradient
+          gradient: this.state.gradient_id
         },
       });
     } else {
@@ -80,15 +81,18 @@ class RegisterPage extends Component {
             </label>
           </div>
           <div>
-            <label htmlFor="gradient">
-              What should we call you:
-              <input
-                type="gradient"
-                name="gradient"
-                value={this.state.gradient}
-                onChange={this.handleInputChangeFor('gradient')}
-              />
-            </label>
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-age-simple">
+                Color Gradient</InputLabel>
+              <Select value={this.state.gradient_id}
+                onChange={this.handleInputChangeFor('gradient_id')}
+                input={<OutlinedInput labelWidth={18} name="gradient_id" id="outlined-age-simple" />}>
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
           </div>
           <div>
             <input
