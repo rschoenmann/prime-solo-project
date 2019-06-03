@@ -5,6 +5,8 @@ class RegisterPage extends Component {
   state = {
     username: '',
     password: '',
+    name: '',
+    gradient: 0,
   };
 
   registerUser = (event) => {
@@ -16,6 +18,8 @@ class RegisterPage extends Component {
         payload: {
           username: this.state.username,
           password: this.state.password,
+          name: this.state.name,
+          gradient: this.state.gradient
         },
       });
     } else {
@@ -61,6 +65,28 @@ class RegisterPage extends Component {
                 name="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="name">
+              What should we call you:
+              <input
+                type="name"
+                name="name"
+                value={this.state.name}
+                onChange={this.handleInputChangeFor('name')}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="gradient">
+              What should we call you:
+              <input
+                type="gradient"
+                name="gradient"
+                value={this.state.gradient}
+                onChange={this.handleInputChangeFor('gradient')}
               />
             </label>
           </div>
