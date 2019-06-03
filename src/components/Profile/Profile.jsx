@@ -36,7 +36,7 @@ class Profile extends Component {
 			title: 'Thanks!',
 			text: 'Your profile has been updated',
 		});
-		
+		this.props.dispatch({type: 'UPDATE_USER', payload: this.state})
 	};//end saveChanges
 
 	render(){

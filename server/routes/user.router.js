@@ -34,13 +34,30 @@ router.post('/register', (req, res, next) => {
 // this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
-});
+});//end login POST
 
 // clear all server session information about this user
 router.post('/logout', (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
-});
+});//end logout POST
+
+router.put('/', rejectUnauthenticated, (req, res) => {
+	console.log('req.body:', req.body)
+	let queryText = `UPDATE "user"
+		SET "username" = $1,
+		"name" = $2,
+		"gradient_id" = $3
+		WHERE id = $4;`;
+	let queryValues = [req.body.username, req.body.name, req.body.gradient_id, req.user.id];
+	pool.query(queryText, queryValues)
+	.then(() => {
+		res.sendStatus(200)
+	}).catch((error) => {
+		console.log('error in user put:', error);
+		res.sendStatus(500);
+	})
+});//end PUT
 
 module.exports = router;
