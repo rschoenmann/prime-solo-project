@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, Card, CardContent, CardActions, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
+import {Checkbox, Card, CardContent, CardActions, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, FormControl} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
 import Rating from 'react-rating';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import './Dashboard.css';
+import Moment from 'react-moment';
 
 class Dashboard extends Component {
 
 	state={
 		open: false,
-		setOpen: false
+		// date: new Date(),
+		// today: date.toLocaleDateString(),
+		heatmap: {
+			start: '',
+			end: '',
+			values: []
+		}
 	}
 
 	componentDidMount(){
@@ -44,16 +53,39 @@ class Dashboard extends Component {
 	};//end handleEdit
 
 	render() {
+		console.log('date', this.state)
+		const today = new Date().toISOString().substr(0,10)
+		const endDate = <Moment add={{days: 7}}>{today}</Moment>
+		console.log('today:', endDate);
 		return (
 			<div>
-				<pre>{JSON.stringify(this.props.day)}</pre>
+				{/* <pre>{JSON.stringify(this.props.day)}</pre> */}
 				<h3>Dashboard!</h3>
+				
 				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add New Day</Button>
 				<br></br><br></br>
 				<h3>Previous Days:</h3>
+				<TextField id="date" variant="outlined"
+					label="Start Date" type="date"
+					defaultValue={today}
+					InputLabelProps={{shrink: true,}}/>
+				<TextField id="date" variant="outlined"
+					label="End Date" type="date"
+					defaultValue={<Moment add={{days: 7}}>{today}</Moment>}
+					InputLabelProps={{shrink: true,}}/>
 				{this.props.day.map((aDay) => {
 					return(
-						<div key= {aDay.reviewid}>
+						// {/* <CalendarHeatmap
+						// 	startDate={new Date('2016-01-01')}
+						// 	endDate={new Date('2016-04-01')}
+						// 	values={[
+						// 		{ date: '2016-01-01' },
+						// 		{ date: '2016-01-22' },
+						// 		{ date: '2016-01-30' },
+						// 		// ...and so on
+						// 	]} /> */}
+
+						<div key={aDay.reviewid}>
 						<Card raised>
 						  <CardContent>
 							Date: {aDay.date}  ID: {aDay.reviewid}
@@ -93,6 +125,7 @@ class Dashboard extends Component {
 						</Card>
 						<br></br><br></br>
 						</div>
+					
 					)
 				})}
 			</div>
