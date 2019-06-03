@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText, Button} from '@material-ui/core';
 import StarRating from '../StarRating/StarRating';
 import Moment from 'react-moment';
+import Swal from 'sweetalert2';
 
 class AddDay extends Component {
 
@@ -29,6 +30,11 @@ class AddDay extends Component {
 		//only allow submission of day if user has filled out starRating
 		if(this.props.review.value !== 0){
 			this.props.dispatch({type: 'ADD_REVIEW', payload: this.props.review});
+			Swal.fire({
+				type: 'success',
+				title: 'Thanks!',
+				text: 'Day has been added',
+			});
 			this.props.history.push('/home')
 		}else{
 			alert('DO THE RATING!')
