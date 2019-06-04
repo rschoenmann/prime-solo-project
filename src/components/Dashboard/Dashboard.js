@@ -6,15 +6,14 @@ import Rating from 'react-rating';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import Moment from 'react-moment';
+import Calendar from 'react-calendar';
 
 class Dashboard extends Component {
 
 	state={
 		open: false,
-		// date: new Date(),
-		// today: date.toLocaleDateString(),
 		heatmap: {
-			start: '',
+			start: 'Today',
 			end: '',
 			values: []
 		}
@@ -24,21 +23,30 @@ class Dashboard extends Component {
 		this.props.dispatch({type: 'FETCH_DAY'})
 	};//end componentDidMount
 
+	dateChange = (value) => {
+		console.log('dateChange:', value);
+		this.setState({
+			heatmap: {
+				values: value
+			}
+		})
+	};//end dateChange
+
 	handleClickOpen = () => {
 		this.setState({
 			open: true
 		})
-  	}
+  	};//end handleClickOpen
 
 	handleClose = () => {
 		this.setState({
 			open: false
 		})
-  	}
+  	};//end handleClose
 
 	handleAdd = () => {
 		this.props.history.push('/addDay')
-	}
+	};//end handleAdd
 
 	handleDelete = (dayid) => {
 		console.log('DELETE id:', dayid)
@@ -54,25 +62,17 @@ class Dashboard extends Component {
 
 	render() {
 		console.log('date', this.state)
-		const today = new Date().toISOString().substr(0,10)
-		const endDate = <Moment add={{days: 7}}>{today}</Moment>
-		console.log('today:', endDate);
 		return (
 			<div>
 				{/* <pre>{JSON.stringify(this.props.day)}</pre> */}
-				<h3>Dashboard!</h3>
+				<h2>Dashboard!</h2>
 				
 				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add New Day</Button>
 				<br></br><br></br>
 				<h3>Previous Days:</h3>
-				<TextField id="date" variant="outlined"
-					label="Start Date" type="date"
-					defaultValue={today}
-					InputLabelProps={{shrink: true,}}/>
-				<TextField id="date" variant="outlined"
-					label="End Date" type="date"
-					defaultValue={<Moment add={{days: 7}}>{today}</Moment>}
-					InputLabelProps={{shrink: true,}}/>
+				<br></br>
+				<p>Current Date Range View: {this.state.heatmap.start} to {this.state.heatmap.end}</p>
+				<Calendar selectRange={true} returnValue="range" onChange={this.dateChange}/>
 				{this.props.day.map((aDay) => {
 					return(
 						// {/* <CalendarHeatmap
