@@ -28,8 +28,10 @@ class Dashboard extends Component {
 	dateChange = (value) => {
 		console.log('dateChange:', value);
 		this.setState({
-				dateRange: value
-		})
+			...this.state,
+			dateRange: value
+		});
+		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: value}});
 	};//end dateChange
 
 	handleAdd = () => {
@@ -62,17 +64,14 @@ class Dashboard extends Component {
 	};//end handleEdit
 
 	render() {
-		console.log('date', this.state)
+		console.log('this.state.dateRange render:', this.state.dateRange)
 		return (
 			<div>
-				{/* <pre>{JSON.stringify(this.props.day)}</pre> */}
 				<h2>Dashboard!</h2>
 				
-				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add New Day</Button>
+				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add Rating For Today</Button>
 				<br></br><br></br>
-				<h3>Previous Days:</h3>
-				<br></br>
-				<p>Current Date Range View: {this.state.startDate} to {this.state.endDate}</p>
+				<p>Select date range to view:</p>
 				<Calendar selectRange={true} returnValue="range" onChange={this.dateChange}/>
 				<CalendarHeatmap
 					horizontal={false}
@@ -85,7 +84,7 @@ class Dashboard extends Component {
 					tooltipDataAttrs={value => {
         				return {'data-tip': `${value.date} has rating of ${value.count}`,};}}
         			showWeekdayLabels={true}
-					weekdayLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
+					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
         			onClick={value => alert(`Clicked on value with count: ${value.count}`)}/>
       			<ReactTooltip />
 				{this.props.day.map((aDay) => {

@@ -79,13 +79,13 @@
 	fill: #254e77;
 }
 
-.react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
+/* .react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
 .react-calendar-heatmap .color-scale-2 { fill: #8cc665; }
 .react-calendar-heatmap .color-scale-3 { fill: #44a340; }
-.react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
+.react-calendar-heatmap .color-scale-4 { fill: #1e6823; } */
 
-/* .react-calendar-heatmap .color-scale-1 { fill: #ec2f4b; }
+.react-calendar-heatmap .color-scale-1 { fill: #ec2f4b; }
 .react-calendar-heatmap .color-scale-2 { fill: #b14b78; }
 .react-calendar-heatmap .color-scale-3 { fill: #7667a5; }
 .react-calendar-heatmap .color-scale-4 { fill: #3b83d2; }
-.react-calendar-heatmap .color-scale-5 { fill: #009fff; } */
+.react-calendar-heatmap .color-scale-5 { fill: #009fff; }
