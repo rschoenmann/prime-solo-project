@@ -5,6 +5,7 @@ import StarRating from '../StarRating/StarRating';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
 
+
 class AddDay extends Component {
 
 	componentDidMount(){
@@ -62,9 +63,12 @@ class AddDay extends Component {
 								label={prompt.prompt} />
 							)
 						})}
+				<p>How would you rate today overall?</p>
+				
 
 				<StarRating />
-
+				
+				
 				<TextField
 					onChange={this.handleNotes}
 					id="standard-multiline-static"

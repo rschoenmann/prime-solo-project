@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Rating from 'react-rating';
 import {Star, StarBorder} from '@material-ui/icons';
 import {connect} from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 class StarRating extends Component{
 
@@ -18,12 +19,15 @@ class StarRating extends Component{
 
 	render(){
 		return(
-			<Rating
+			<>
+			<Rating data-tip="1 being the worst, 5 being the best"
 				initialRating={this.state.value}
 				onChange={this.handleRating}
 				emptySymbol={<StarBorder />}
 				fullSymbol={<Star />}
 				start={0} stop={5} />
+				<ReactTooltip />
+			</>
 		)
 	}
 }
