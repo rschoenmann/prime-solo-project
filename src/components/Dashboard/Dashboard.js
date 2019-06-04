@@ -1,23 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, Card, CardContent, CardActions, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, FormControl} from '@material-ui/core';
+import {Checkbox, Card, CardContent, CardActions, Button, TextField} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
 import Rating from 'react-rating';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import Moment from 'react-moment';
 import Calendar from 'react-calendar';
+import Swal from 'sweetalert2';
 
 class Dashboard extends Component {
 
-	state={
-		open: false,
-		heatmap: {
-			start: 'Today',
-			end: '',
-			values: []
+	state = {
+			startDate: 'Today',
+			endDate: '',
+			dateRange: []
 		}
-	}
 
 	componentDidMount(){
 		this.props.dispatch({type: 'FETCH_DAY'})
@@ -26,23 +24,9 @@ class Dashboard extends Component {
 	dateChange = (value) => {
 		console.log('dateChange:', value);
 		this.setState({
-			heatmap: {
-				values: value
-			}
+				dateRange: value
 		})
 	};//end dateChange
-
-	handleClickOpen = () => {
-		this.setState({
-			open: true
-		})
-  	};//end handleClickOpen
-
-	handleClose = () => {
-		this.setState({
-			open: false
-		})
-  	};//end handleClose
 
 	handleAdd = () => {
 		this.props.history.push('/addDay')
@@ -50,10 +34,23 @@ class Dashboard extends Component {
 
 	handleDelete = (dayid) => {
 		console.log('DELETE id:', dayid)
-		this.props.dispatch({type: 'DELETE_DAY', payload: dayid})
-		this.setState({
-			open: false
-		})
+		Swal.fire({
+		  title: 'Are you sure you want to delete this day?',
+		  text: "You won't be able to revert this!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+		  if (result.value) {
+			this.props.dispatch({type: 'DELETE_DAY', payload: dayid})
+		    Swal.fire(
+		      'Deleted!',
+		      'Day has been deleted.',
+		      'success')
+		  }//end if statement
+		});
 	};//end handleDelete
 
 	handleEdit = () => {
@@ -71,7 +68,7 @@ class Dashboard extends Component {
 				<br></br><br></br>
 				<h3>Previous Days:</h3>
 				<br></br>
-				<p>Current Date Range View: {this.state.heatmap.start} to {this.state.heatmap.end}</p>
+				<p>Current Date Range View: {this.state.startDate} to {this.state.endDate}</p>
 				<Calendar selectRange={true} returnValue="range" onChange={this.dateChange}/>
 				{this.props.day.map((aDay) => {
 					return(
@@ -104,23 +101,7 @@ class Dashboard extends Component {
 						  </CardContent>
 						  <CardActions>
 						    <Button variant="outlined" color="primary" onClick={this.handleEdit}>Edit Day</Button>
-							{/* <Button variant="outlined" color="secondary" onClick={() => this.handleDelete(aDay.reviewid)}>Delete Day</Button> */}
-							<Button variant="outlined" color="secondary" onClick={this.handleClickOpen}>
-						        Delete Day</Button>
-						      <Dialog open={this.state.open}
-							  	aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" >
-						        <DialogTitle id="alert-dialog-title">{`Delete this day, ${aDay.date}?`}</DialogTitle>
-						        <DialogContent dividers={true}>
-      								<DialogContentText id="alert-dialog-description">
-        							This can't be undone</DialogContentText>
-    							</DialogContent>
-								<DialogActions>
-									<Button onClick={this.handleClose} color="primary">
-        								Cancel</Button>
-									<Button onClick={() => this.handleDelete(aDay.reviewid)} color="primary" >
-						            	Delete Day</Button>
-						        </DialogActions>
-						      </Dialog>
+							<Button variant="outlined" color="secondary" onClick={() => this.handleDelete(aDay.reviewid)}>Delete Day</Button>
 						  </CardActions>
 						</Card>
 						<br></br><br></br>
