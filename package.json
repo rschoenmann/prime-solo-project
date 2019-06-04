@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.1",
     "@material-ui/icons": "^4.0.1",
+    "@wojtekmaj/react-daterange-picker": "^2.2.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.6",
     "cookie-session": "^2.0.0-beta.3",

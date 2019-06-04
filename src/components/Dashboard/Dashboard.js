@@ -7,12 +7,14 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import Moment from 'react-moment';
 import Calendar from 'react-calendar';
+import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 
 class Dashboard extends Component {
 
 	state = {
+			date: [new Date(), new Date()],
 			startDate: 'Today',
 			endDate: '',
 			dateRange: [],
@@ -29,7 +31,7 @@ class Dashboard extends Component {
 		console.log('dateChange:', value);
 		this.setState({
 			...this.state,
-			dateRange: value
+			date: value
 		});
 		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: value}});
 	};//end dateChange
@@ -72,7 +74,9 @@ class Dashboard extends Component {
 				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add Rating For Today</Button>
 				<br></br><br></br>
 				<p>Select date range to view:</p>
-				<Calendar selectRange={true} returnValue="range" onChange={this.dateChange}/>
+				<DateRangePicker onChange={this.dateChange}
+        			value={this.state.date}/>
+				
 				<CalendarHeatmap
 					horizontal={false}
 					startDate={new Date('2019-01-01')}
