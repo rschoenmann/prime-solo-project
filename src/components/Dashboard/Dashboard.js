@@ -8,13 +8,17 @@ import './Dashboard.css';
 import Moment from 'react-moment';
 import Calendar from 'react-calendar';
 import Swal from 'sweetalert2';
+import ReactTooltip from 'react-tooltip';
 
 class Dashboard extends Component {
 
 	state = {
 			startDate: 'Today',
 			endDate: '',
-			dateRange: []
+			dateRange: [],
+			testDates: [{date: '2019-01-01', count: 4 }, {date: '2019-01-02', count: 3  }, {date: '2019-01-03', count: 2  }, {date: '2019-01-04', count: 3  },{date: '2019-01-05', count: 5 }, 
+						{date: '2019-01-06', count: 3 }, {date: '2019-01-07', count: 2  }, {date: '2019-01-08', count: 4  }, {date: '2019-01-09', count: 4  },{date: '2019-01-10', count: 1 }, 
+						{date: '2019-01-11', count: 4 }, {date: '2019-01-12', count: 5 }, {date: '2019-01-13', count: 2 }, {date: '2019-01-14', count: 3 }, ]
 		}
 
 	componentDidMount(){
@@ -70,18 +74,22 @@ class Dashboard extends Component {
 				<br></br>
 				<p>Current Date Range View: {this.state.startDate} to {this.state.endDate}</p>
 				<Calendar selectRange={true} returnValue="range" onChange={this.dateChange}/>
+				<CalendarHeatmap
+					horizontal={false}
+					startDate={new Date('2019-01-01')}
+					endDate={new Date('2019-01-30')}
+					values={this.state.testDates} 
+					classForValue={(value) => {
+						if (!value) {return 'color-empty';}
+						return `color-scale-${value.count}`;}}
+					tooltipDataAttrs={value => {
+        				return {'data-tip': `${value.date} has rating of ${value.count}`,};}}
+        			showWeekdayLabels={true}
+					weekdayLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
+        			onClick={value => alert(`Clicked on value with count: ${value.count}`)}/>
+      			<ReactTooltip />
 				{this.props.day.map((aDay) => {
 					return(
-						// {/* <CalendarHeatmap
-						// 	startDate={new Date('2016-01-01')}
-						// 	endDate={new Date('2016-04-01')}
-						// 	values={[
-						// 		{ date: '2016-01-01' },
-						// 		{ date: '2016-01-22' },
-						// 		{ date: '2016-01-30' },
-						// 		// ...and so on
-						// 	]} /> */}
-
 						<div key={aDay.reviewid}>
 						<Card raised>
 						  <CardContent>
