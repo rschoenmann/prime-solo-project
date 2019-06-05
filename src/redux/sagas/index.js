@@ -5,6 +5,7 @@ import userSaga from './userSaga';
 import promptSaga from './promptSaga';
 import reviewSaga from './reviewSaga';
 import daySaga from './daySaga';
+import datesSaga from './datesSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     promptSaga(),
     reviewSaga(),
     daySaga(),
+    datesSaga(),
   ]);
 }

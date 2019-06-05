@@ -14,7 +14,6 @@ import ReactTooltip from 'react-tooltip';
 class Dashboard extends Component {
 
 	state = {
-			date: [new Date(), new Date()],
 			startDate: '',
 			endDate: '',
 			testDates: [{ date: '2019-01-01', count: 4 }, { date: '2019-01-02', count: 3 }, { date: '2019-01-03', count: 2 }, { date: '2019-01-04', count: 3 }, { date: '2019-01-05', count: 5 },
@@ -34,13 +33,14 @@ class Dashboard extends Component {
 			startDate: monthAgo,
 			endDate: currentDate
 		});
-		this.props.dispatch({ type: 'FETCH_DATES', payload: {dateRange: [monthAgo, currentDate]}})
+		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: [monthAgo, currentDate]}})
 	};//end getNow
 
 	dateChange = (value) => {
 		console.log('dateChange:', value);
 		this.setState({
-			date: value
+			startDate: moment(value[0]).format('YYYY-MM-DD'),
+			endDate: moment(value[1]).format('YYYY-MM-DD')
 		});
 		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: value}});
 	};//end dateChange
@@ -76,6 +76,9 @@ class Dashboard extends Component {
 
 	render() {
 		console.log('this.state.date render:', this.state)
+		console.log('test array', moment(this.state.startDate).toDate())
+		//let dateRange = [moment(this.state.startDate).toDate(), moment(this.state.endDate).toDate()];
+		//let dateRange = [new Date(), new Date()]
 		return (
 			<div>
 				<h2>Dashboard!</h2>
@@ -83,14 +86,13 @@ class Dashboard extends Component {
 				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add Rating For Today</Button>
 				<br></br><br></br>
 				<p>Select date range to view:</p>
-				<DateRangePicker onChange={this.dateChange}
-        			value={this.state.date}/>
+				<DateRangePicker onChange={this.dateChange}/>
 				
 				<CalendarHeatmap
 					horizontal={false}
 					startDate={this.state.startDate}
 					endDate={this.state.endDate}
-					values={this.state.testDates} 
+					values={this.props.dates} 
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
 						return `color-scale-${value.count}`;}}
@@ -136,6 +138,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
 	day: state.day,
+	dates: state.dates,
 });
 
 // this allows us to use <App /> in index.js

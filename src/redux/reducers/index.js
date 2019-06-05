@@ -5,6 +5,7 @@ import user from './userReducer';
 import prompt from './promptReducer';
 import review from './reviewReducer';
 import day from './dayReducer';
+import dates from './datesReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   prompt,
   review,
   day,
+  dates,
 });
 
 export default rootReducer;

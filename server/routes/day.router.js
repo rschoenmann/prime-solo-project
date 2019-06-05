@@ -25,10 +25,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.get('/dates', rejectUnauthenticated, (req, res) => {
 	console.log('day/dates req.query:', req.query);
 	let startDate = req.query.startDate;
-	// moment(req.query.endDate).format('YYYY-MM-DD')
 	let endDate = req.query.endDate;
-	// moment(req.query.startDate).format('YYYY-MM-DD')
-	// console.log('start end date', startDate, endDate)
 	let queryText = `SELECT "review"."id" as reviewId, "review"."date", "review"."user_id", "review"."rating", "review"."notes", json_agg(json_build_object('promptText', "prompt".prompt, 'promptAnswer', "prompt_review".answer)) as answers FROM "review"
 		JOIN "prompt_review" ON "prompt_review".review_id = "review".id
 		JOIN "prompt" ON "prompt_review".prompt_id = "prompt".id
