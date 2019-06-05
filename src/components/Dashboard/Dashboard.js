@@ -6,6 +6,7 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
 import Calendar from 'react-calendar';
+import Rating from 'react-rating';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
@@ -16,13 +17,13 @@ class Dashboard extends Component {
 			date: [new Date(), new Date()],
 			startDate: '',
 			endDate: '',
-			testDates: []
+		testDates: [{ date: '2019-01-01', count: 4 }, { date: '2019-01-02', count: 3 }, { date: '2019-01-03', count: 2 }, { date: '2019-01-04', count: 3 }, { date: '2019-01-05', count: 5 },
+            {date: '2019-01-11', count: 4 }, {date: '2019-01-12', count: 5 }, {date: '2019-01-13', count: 2 }, {date: '2019-01-14', count: 3 }, ]
 		}
 
 	componentDidMount(){
 		this.props.dispatch({type: 'FETCH_DAY'});
-		//getDates gets today's date and the date a month ago
-		//in order to set initial start and end dates for Heatmap Calendar
+		//getDates gets today's date and the date a month ago in order to set initial start and end dates for Heatmap Calendar
 		this.getDates();
 	};//end componentDidMount
 
@@ -33,6 +34,7 @@ class Dashboard extends Component {
 			startDate: now,
 			endDate: past
 		});
+		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: [past, now]}})
 	};//end getNow
 
 	dateChange = (value) => {
@@ -74,6 +76,8 @@ class Dashboard extends Component {
 
 	render() {
 		console.log('this.state.date render:', this.state)
+		const startHere = this.state.startDate;
+		const endHere = this.state.endDate;
 		return (
 			<div>
 				<h2>Dashboard!</h2>
@@ -86,8 +90,8 @@ class Dashboard extends Component {
 				
 				<CalendarHeatmap
 					horizontal={false}
-					startDate={this.state.startDate}
-					endDate={this.state.endDate}
+					startDate={`${startHere}`}
+					endDate={`${endHere}`}
 					values={this.state.testDates} 
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
@@ -98,7 +102,7 @@ class Dashboard extends Component {
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
         			onClick={value => alert(`Clicked on value with count: ${value.count}`)}/>
       			<ReactTooltip />
-				{/* {this.props.day.map((aDay) => {
+				{this.props.day.map((aDay) => {
 					return(
 						<div key={aDay.reviewid}>
 						<Card raised>
@@ -126,7 +130,7 @@ class Dashboard extends Component {
 						</div>
 					
 					)
-				})} */}
+				})}
 			</div>
 		)
 	}

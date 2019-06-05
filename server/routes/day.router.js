@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
+const moment = require('moment');
 
 router.get('/', rejectUnauthenticated, (req, res) => {
 	//json_agg and json_build_object solved the problem of trying to combine the data from two array_agg
@@ -21,25 +22,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 	});
 });//end GET
 
-router.get('/dates', rejectUnauthenticated, (req, res) => {
-	console.log('req.query:', req.query);
-	let startDate = new Date(req.query.startDate).toISOString().substr(0,10);
-	let endDate = new Date(req.query.endDate).toISOString().substr(0,10);
-	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", json_agg(json_build_object('promptText', "prompt".prompt, 'promptAnswer', "prompt_review".answer)) as answers FROM "review"
-		JOIN "prompt_review" ON "prompt_review".review_id = "review".id
-		JOIN "prompt" ON "prompt_review".prompt_id = "prompt".id
-		WHERE "review".date BETWEEN $1 AND $2
-		AND "review".user_id = $3
-		GROUP BY "review".id ORDER BY "review".date ASC;`;
-	let queryValues = [startDate, endDate, req.user.id]
-	pool.query(queryText, queryValues)
-	.then((result) => {
-		console.log('day/dates get results:', result.rows);
-		res.send(result.rows)
-	}).catch((error) => {
-		console.log('error in day/dates GET:', error)
-	});
-});//end GET
 
 router.post('/', rejectUnauthenticated, async (req, res) => {
 	console.log('Is authenticated?', req.isAuthenticated());

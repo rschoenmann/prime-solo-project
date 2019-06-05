@@ -5,7 +5,7 @@ function* fetchDates(action) {
 	try{
 		console.log('fetchDates action.payload:', action.payload)
 		let query = `?startDate=${action.payload.dateRange[0]}&endDate=${action.payload.dateRange[1]}`
-		const response = yield axios.get(`/api/day/dates${query}`)
+		const response = yield axios.get(`/api/dates${query}`)
 	} catch (error) {
 		console.log('Day dates get request failed', error)
 	}
