@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, Card, CardContent, CardActions, Button, TextField} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
-import Rating from 'react-rating';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
@@ -22,23 +21,17 @@ class Dashboard extends Component {
 
 	componentDidMount(){
 		this.props.dispatch({type: 'FETCH_DAY'});
-		//getNow and getEndDate are fetching today's date and the date a month ago
+		//getDates gets today's date and the date a month ago
 		//in order to set initial start and end dates for Heatmap Calendar
-		this.getNow();
-		this.getEndDate();
+		this.getDates();
 	};//end componentDidMount
 
-	getEndDate = () => {
-		let future = moment().subtract(1, 'months').format('YYYY-MM-DD');
-		this.setState({
-			endDate: future
-		});
-	};//end getEndDate
-
-	getNow = () => {
+	getDates = () => {
 		let now = moment().format('YYYY-MM-DD');
+		let past = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		this.setState({
-			startDate: now
+			startDate: now,
+			endDate: past
 		});
 	};//end getNow
 
