@@ -17,7 +17,7 @@ class Dashboard extends Component {
 			date: [new Date(), new Date()],
 			startDate: '',
 			endDate: '',
-		testDates: [{ date: '2019-01-01', count: 4 }, { date: '2019-01-02', count: 3 }, { date: '2019-01-03', count: 2 }, { date: '2019-01-04', count: 3 }, { date: '2019-01-05', count: 5 },
+			testDates: [{ date: '2019-01-01', count: 4 }, { date: '2019-01-02', count: 3 }, { date: '2019-01-03', count: 2 }, { date: '2019-01-04', count: 3 }, { date: '2019-01-05', count: 5 },
             {date: '2019-01-11', count: 4 }, {date: '2019-01-12', count: 5 }, {date: '2019-01-13', count: 2 }, {date: '2019-01-14', count: 3 }, ]
 		}
 
@@ -28,13 +28,13 @@ class Dashboard extends Component {
 	};//end componentDidMount
 
 	getDates = () => {
-		let now = moment().format('YYYY-MM-DD');
-		let past = moment().subtract(1, 'months').format('YYYY-MM-DD');
+		let currentDate = moment().format('YYYY-MM-DD');
+		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		this.setState({
-			startDate: now,
-			endDate: past
+			startDate: monthAgo,
+			endDate: currentDate
 		});
-		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: [past, now]}})
+		this.props.dispatch({ type: 'FETCH_DATES', payload: {dateRange: [monthAgo, currentDate]}})
 	};//end getNow
 
 	dateChange = (value) => {
@@ -76,8 +76,6 @@ class Dashboard extends Component {
 
 	render() {
 		console.log('this.state.date render:', this.state)
-		const startHere = this.state.startDate;
-		const endHere = this.state.endDate;
 		return (
 			<div>
 				<h2>Dashboard!</h2>
@@ -90,8 +88,8 @@ class Dashboard extends Component {
 				
 				<CalendarHeatmap
 					horizontal={false}
-					startDate={`${startHere}`}
-					endDate={`${endHere}`}
+					startDate={this.state.startDate}
+					endDate={this.state.endDate}
 					values={this.state.testDates} 
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
