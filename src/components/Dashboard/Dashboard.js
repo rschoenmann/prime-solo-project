@@ -15,9 +15,7 @@ class Dashboard extends Component {
 
 	state = {
 			startDate: '',
-			endDate: '',
-			testDates: [{ date: '2019-01-01', count: 4 }, { date: '2019-01-02', count: 3 }, { date: '2019-01-03', count: 2 }, { date: '2019-01-04', count: 3 }, { date: '2019-01-05', count: 5 },
-            {date: '2019-01-11', count: 4 }, {date: '2019-01-12', count: 5 }, {date: '2019-01-13', count: 2 }, {date: '2019-01-14', count: 3 }, ]
+			endDate: ''
 		}
 
 	componentDidMount(){
@@ -75,10 +73,6 @@ class Dashboard extends Component {
 	};//end handleEdit
 
 	render() {
-		console.log('this.state.date render:', this.state)
-		console.log('test array', moment(this.state.startDate).toDate())
-		//let dateRange = [moment(this.state.startDate).toDate(), moment(this.state.endDate).toDate()];
-		//let dateRange = [new Date(), new Date()]
 		return (
 			<div>
 				<h2>Dashboard!</h2>
@@ -86,7 +80,8 @@ class Dashboard extends Component {
 				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add Rating For Today</Button>
 				<br></br><br></br>
 				<p>Select date range to view:</p>
-				<DateRangePicker onChange={this.dateChange}/>
+				<DateRangePicker onChange={this.dateChange}
+					value={[new Date(), new Date()]} />
 				
 				<CalendarHeatmap
 					horizontal={false}
@@ -97,10 +92,10 @@ class Dashboard extends Component {
 						if (!value) {return 'color-empty';}
 						return `color-scale-${value.count}`;}}
 					tooltipDataAttrs={value => {
-        				return {'data-tip': `Date: ${value.date} Rating: ${value.count}/5`,};}}
+        				return {'data-tip': `Date: ${value.date} Rating: ${value.rating}/5`,};}}
         			showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-        			onClick={value => alert(`Clicked on value with count: ${value.count}`)}/>
+        			onClick={value => alert(`Clicked on value with count: ${value.rating}`)}/>
       			<ReactTooltip />
 				{this.props.day.map((aDay) => {
 					return(
