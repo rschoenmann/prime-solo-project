@@ -90,12 +90,12 @@ class Dashboard extends Component {
 					values={this.props.dates} 
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
-						return `color-scale-${value.count}`;}}
+						return `color-scale-${value.rating}`;}}
 					tooltipDataAttrs={value => {
         				return {'data-tip': `Date: ${value.date} Rating: ${value.rating}/5`,};}}
         			showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-        			onClick={value => alert(`Clicked on value with count: ${value.rating}`)}/>
+        			onClick={value => alert(`Clicked on value with count: ${value.rating} and id of ${value.reviewid}`)}/>
       			<ReactTooltip />
 				{this.props.day.map((aDay) => {
 					return(
