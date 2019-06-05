@@ -6,6 +6,7 @@ import prompt from './promptReducer';
 import review from './reviewReducer';
 import day from './dayReducer';
 import dates from './datesReducer';
+import gradient from './gradientReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   review,
   day,
   dates,
+  gradient,
 });
 
 export default rootReducer;

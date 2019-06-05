@@ -12,6 +12,10 @@ class Profile extends Component {
 		gradient_id: 1
 	}
 
+	componentDidMount(){
+		this.props.dispatch({type: 'FETCH_GRADIENT'})
+	}
+
 	editProfile = () => {
 		//on edit button click, set profileEditable state to true to trigger conditionally
 		//rendered display to allow profile updates to be made
@@ -71,6 +75,10 @@ class Profile extends Component {
 									<option value={3} >Yellow to Purple</option>
 								</select></label>
 							<br></br>
+						{/* {this.props.} */}
+							<div className="gradientExample">
+
+							</div>
 
 							<p>GRADIENT EXAMPLE HERE</p>
 
