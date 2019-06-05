@@ -65,9 +65,7 @@ class AddDay extends Component {
 						})}
 				<p>How would you rate today overall?</p>
 				
-
 				<StarRating />
-				
 				
 				<TextField
 					onChange={this.handleNotes}

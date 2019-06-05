@@ -5,7 +5,7 @@ import {Star, StarBorder} from '@material-ui/icons';
 import Rating from 'react-rating';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
-import Moment from 'react-moment';
+import moment from 'moment';
 import Calendar from 'react-calendar';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Swal from 'sweetalert2';
@@ -15,22 +15,36 @@ class Dashboard extends Component {
 
 	state = {
 			date: [new Date(), new Date()],
-			startDate: 'Today',
+			startDate: '',
 			endDate: '',
-			dateRange: [],
-			testDates: [{date: '2019-01-01', count: 4 }, {date: '2019-01-02', count: 3  }, {date: '2019-01-03', count: 2  }, {date: '2019-01-04', count: 3  },{date: '2019-01-05', count: 5 }, 
-						{date: '2019-01-06', count: 3 }, {date: '2019-01-07', count: 2  }, {date: '2019-01-08', count: 4  }, {date: '2019-01-09', count: 4  },{date: '2019-01-10', count: 1 }, 
-						{date: '2019-01-11', count: 4 }, {date: '2019-01-12', count: 5 }, {date: '2019-01-13', count: 2 }, {date: '2019-01-14', count: 3 }, ]
+			testDates: []
 		}
 
 	componentDidMount(){
-		this.props.dispatch({type: 'FETCH_DAY'})
+		this.props.dispatch({type: 'FETCH_DAY'});
+		//getNow and getEndDate are fetching today's date and the date a month ago
+		//in order to set initial start and end dates for Heatmap Calendar
+		this.getNow();
+		this.getEndDate();
 	};//end componentDidMount
+
+	getEndDate = () => {
+		let future = moment().subtract(1, 'months').format('YYYY-MM-DD');
+		this.setState({
+			endDate: future
+		});
+	};//end getEndDate
+
+	getNow = () => {
+		let now = moment().format('YYYY-MM-DD');
+		this.setState({
+			startDate: now
+		});
+	};//end getNow
 
 	dateChange = (value) => {
 		console.log('dateChange:', value);
 		this.setState({
-			...this.state,
 			date: value
 		});
 		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: value}});
@@ -66,7 +80,7 @@ class Dashboard extends Component {
 	};//end handleEdit
 
 	render() {
-		console.log('this.state.dateRange render:', this.state.dateRange)
+		console.log('this.state.date render:', this.state)
 		return (
 			<div>
 				<h2>Dashboard!</h2>
@@ -79,19 +93,19 @@ class Dashboard extends Component {
 				
 				<CalendarHeatmap
 					horizontal={false}
-					startDate={new Date('2019-01-01')}
-					endDate={new Date('2019-01-30')}
+					startDate={this.state.startDate}
+					endDate={this.state.endDate}
 					values={this.state.testDates} 
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
 						return `color-scale-${value.count}`;}}
 					tooltipDataAttrs={value => {
-        				return {'data-tip': `${value.date} has rating of ${value.count}`,};}}
+        				return {'data-tip': `Date: ${value.date} Rating: ${value.count}/5`,};}}
         			showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
         			onClick={value => alert(`Clicked on value with count: ${value.count}`)}/>
       			<ReactTooltip />
-				{this.props.day.map((aDay) => {
+				{/* {this.props.day.map((aDay) => {
 					return(
 						<div key={aDay.reviewid}>
 						<Card raised>
@@ -119,7 +133,7 @@ class Dashboard extends Component {
 						</div>
 					
 					)
-				})}
+				})} */}
 			</div>
 		)
 	}
