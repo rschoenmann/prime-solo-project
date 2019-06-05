@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, Card, CardContent, CardActions, Button, TextField} from '@material-ui/core';
+import {Checkbox, Card, CardContent, CardActions, Button, Modal, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
 import Calendar from 'react-calendar';
 import Rating from 'react-rating';
+import SingleDay from '../SingleDay/SingleDay';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
@@ -14,6 +15,7 @@ import ReactTooltip from 'react-tooltip';
 class Dashboard extends Component {
 
 	state = {
+			open: false,
 			startDate: '',
 			endDate: ''
 		}
@@ -47,8 +49,43 @@ class Dashboard extends Component {
 		this.props.history.push('/addDay')
 	};//end handleAdd
 
-	handleDateClick = (heatmapValue) => {
-		console.log('handleDate click reviewid:', heatmapValue)
+	handleClickOpen = (value) => {
+		this.setState({
+			open: true
+		})
+	};//end handleClickOpen
+
+	handleClose = () => {
+		this.setState({
+			open: false
+		})
+	};//end handleClose
+
+	handleDateClick = (value) => {
+		console.log('handleDate click value:', value);
+		let formatDate = moment(value.date).format('dddd, MMMM Do YYYY');
+		Swal.fire({
+			title: `${formatDate}`,
+			html:
+				`<Card raised>
+						  <CardContent>
+							ID: ${value.reviewid}
+								${value.answers}.map((answer, i) => {
+									return (
+										<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
+											checked={answer.promptAnswer} color="primary" disabled /></p>
+									)
+								})}`,
+			showCloseButton: true,
+			showCancelButton: true,
+			focusConfirm: false,
+			confirmButtonText:
+				'<i class="fa fa-thumbs-up"></i> Great!',
+			confirmButtonAriaLabel: 'Thumbs up, great!',
+			cancelButtonText:
+				'<i class="fa fa-thumbs-down"></i>',
+			cancelButtonAriaLabel: 'Thumbs down',
+		})
 	};//end handleDateClick
 
 	handleDelete = (dayid) => {
@@ -99,37 +136,13 @@ class Dashboard extends Component {
         				return {'data-tip': `Date: ${value.date} Rating: ${value.rating}/5`,};}}
         	showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-					onClick={this.handleDateClick} />
+					onClick={this.handleClickOpen} />
       			<ReactTooltip />
-				{this.props.day.map((aDay) => {
-					return(
-						<div key={aDay.reviewid}>
-						<Card raised>
-						  <CardContent>
-							Date: {aDay.date}  ID: {aDay.reviewid}
-								{aDay.answers.map((answer, i) => {
-									return (
-										<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
-											checked={answer.promptAnswer} color="primary" disabled /></p>
-									)
-								})}
-							Rating: <Rating initialRating={aDay.rating}
-								emptySymbol={<StarBorder />}
-								fullSymbol={<Star />}
-								start={0} stop={5} readonly />
-								<br></br>
-							Notes: {aDay.notes}
-						  </CardContent>
-						  <CardActions>
-						    <Button variant="outlined" color="primary" onClick={this.handleEdit}>Edit Day</Button>
-							<Button variant="outlined" color="secondary" onClick={() => this.handleDelete(aDay.reviewid)}>Delete Day</Button>
-						  </CardActions>
-						</Card>
-						<br></br><br></br>
-						</div>
-					
-					)
-				})}
+
+				<Modal open={this.state.open} onClose={this.handleClose}>
+					<SingleDay />
+
+				</Modal>
 			</div>
 		)
 	}
