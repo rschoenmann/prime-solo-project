@@ -6,7 +6,12 @@
 
 CREATE TABLE "gradient" (
     "id" SERIAL PRIMARY KEY,
-    "name" VARCHAR(30)
+    "name" VARCHAR(30),
+	"color1" VARCHAR(10),
+	"color2" VARCHAR(10),
+	"color3" VARCHAR(10),
+	"color4" VARCHAR(10),
+	"color5" VARCHAR(10)
 );
 
 CREATE TABLE "user" (
