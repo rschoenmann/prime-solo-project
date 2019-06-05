@@ -47,6 +47,10 @@ class Dashboard extends Component {
 		this.props.history.push('/addDay')
 	};//end handleAdd
 
+	handleDateClick = (heatmapValue) => {
+		console.log('handleDate click reviewid:', heatmapValue)
+	};//end handleDateClick
+
 	handleDelete = (dayid) => {
 		console.log('DELETE id:', dayid)
 		Swal.fire({
@@ -93,9 +97,9 @@ class Dashboard extends Component {
 						return `color-scale-${value.rating}`;}}
 					tooltipDataAttrs={value => {
         				return {'data-tip': `Date: ${value.date} Rating: ${value.rating}/5`,};}}
-        			showWeekdayLabels={true}
+        	showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-        			onClick={value => alert(`Clicked on value with count: ${value.rating} and id of ${value.reviewid}`)}/>
+					onClick={this.handleDateClick} />
       			<ReactTooltip />
 				{this.props.day.map((aDay) => {
 					return(
