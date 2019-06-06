@@ -80,13 +80,16 @@ class Profile extends Component {
 							<div className="gradientExample">
 								{this.props.gradient.map((gradient) =>{
 									return(
-										<div key={gradient.id}>
-											{gradient.colorgradient.map((color, i) => {
+										<>
+										<p>COLORS</p>
+										<ul key={gradient.id}>
+											{gradient.colors.map((color) => {
 												return(
-													<div key={i} className={color.color1}></div>
+													<li key={color.value} className="gradientDiv" style={{color: `${color.color}`}}>{color.color}</li>
 												)
 											})}
-										</div>
+										</ul>
+										</>
 									)
 								})}
 							</div>
@@ -99,7 +102,25 @@ class Profile extends Component {
 							<p>What should we call you: {this.props.user.name}</p>
 							<p>Default Color Gradient: {this.props.user.gradient_id}</p>
 							<p>GRADIENT EXAMPLE HERE</p>
-							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button></>
+							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
+
+							<div className="gradientExample">
+								{this.props.gradient.map((gradient) => {
+									return (
+										<>
+											<p>COLORS</p>
+											<ul key={gradient.id}>
+												{gradient.colors.map((color) => {
+													return (
+														<li key={color.value} className="gradientDiv" style={{ color: `${color.color}` }}>{color.color}</li>
+													)
+												})}
+											</ul>
+										</>
+									)
+								})}
+							</div>
+					</>	
 					}
 			</div>
 		)
