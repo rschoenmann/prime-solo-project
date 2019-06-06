@@ -67,7 +67,8 @@ class SingleDay extends Component{
 }
 
 const mapStateToProps = state => ({
-	day: state.day
+	day: state.day,
+	single: state.single
 });
 
 export default connect(mapStateToProps)(SingleDay);

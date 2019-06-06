@@ -3,9 +3,8 @@ import {put, takeLatest} from 'redux-saga/effects';
 
 function* fetchSingleDay(action) {
 	try {
-		console.log('single day action', action.payload)
-		const response = yield axios.get(`/api/day/single/${action.payload}`);
-		yield put({type: 'SET_DAY', payload: response.data});
+		const response = yield axios.get(`/api/singleDay/${action.payload}`);
+		yield put({type: 'SET_SINGLE_DAY', payload: response.data});
 	} catch (error) {
 		console.log('single day get request failed', error);
 	}

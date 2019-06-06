@@ -11,8 +11,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         WHERE "review".user_id = $1
         AND "review".id = $2
         GROUP BY "review".id ORDER BY "review".id ASC;`;
-	let queryValue = req.user.id
-	pool.query(queryText, [queryValue, req.params.id])
+	let queryValue = [req.user.id, req.params.id]
+	pool.query(queryText, queryValue)
 		.then((result) => {
 			console.log('day get results:', result.rows);
 			res.send(result.rows)
