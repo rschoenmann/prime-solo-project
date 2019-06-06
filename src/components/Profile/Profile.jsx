@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from '@material-ui/core';
 import Swal from 'sweetalert2';
+import './Profile.css';
 
 class Profile extends Component {
 
@@ -75,9 +76,19 @@ class Profile extends Component {
 									<option value={3} >Yellow to Purple</option>
 								</select></label>
 							<br></br>
-						{/* {this.props.} */}
-							<div className="gradientExample">
 
+							<div className="gradientExample">
+								{this.props.gradient.map((gradient) =>{
+									return(
+										<div key={gradient.id}>
+											{gradient.colorgradient.map((color, i) => {
+												return(
+													<div key={i} className={color.color1}></div>
+												)
+											})}
+										</div>
+									)
+								})}
 							</div>
 
 							<p>GRADIENT EXAMPLE HERE</p>
@@ -97,7 +108,7 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
 	user: state.user,
-	// gradient: state.gradient
+	gradient: state.gradient
 });
 
 export default connect(mapStateToProps)(Profile);
