@@ -65,6 +65,15 @@ class SingleDay extends Component{
 		console.log('edit day rating:', value)
 	};//end handleRating
 
+	saveEdit = () => {
+		this.handleEdit();
+		Swal.fire({
+			type: 'success',
+			title: 'Thanks!',
+			text: 'Your changes have been saved',
+		});
+	};//end saveEdit
+
 
 	render(){
 		let dayDate = moment(this.props.single.date).format('dddd, MMMM Do YYYY');
@@ -103,7 +112,7 @@ class SingleDay extends Component{
 								<CardActions>
 									<Button variant="outlined" color="primary" onClick={this.handleEdit}>Cancel Edit</Button>
 									<Button variant="outlined" color="secondary" onClick={() => this.handleDelete(day.reviewid)}>Delete Day</Button>
-									<Button variant="outlined" color="primary" onClick={this.handleEdit}>Save Changes</Button>
+									<Button variant="outlined" color="primary" onClick={this.saveEdit}>Save Changes</Button>
 								</CardActions>
 							</Card>
 						)
