@@ -48,7 +48,7 @@ class Profile extends Component {
 		console.log('is profile editable?', this.state.profileEditable)
 		return(
 			<div>
-				<h2>{this.props.user.name}'s Profile</h2>
+				<h2>{this.props.user.username}'s Profile</h2>
 						{/* ternary statement to conditionally render page based on if user is editing profile or not */}
 					    {this.state.profileEditable ?
 						<><form>
@@ -66,18 +66,32 @@ class Profile extends Component {
 								onChange={this.handleInputChange('name')} /></label>
 							<br></br>
 
-							
 							<label htmlFor="gradient_id">
 							Default color gradient:
 								<select value={this.props.user.gradient_id} onChange={this.handleInputChange('gradient_id')}>
-									<option value={0}>No preference</option>
-									<option value={1} >Red to Blue</option>
-									<option value={2} >Blue to Green</option>
-									<option value={3} >Yellow to Purple</option>
+									{this.props.gradient.map((gradient) => {
+										return(
+											<option key={gradient.gradientid}>{gradient.name}</option>
+										)
+									})}
 								</select></label>
+							{this.props.gradient.map((aGradient) => {
+								return(
+									<div>
+										<p>{aGradient.name}:</p>
+										{aGradient.colors.map((color, i) => {
+											return(
+												<>
+												<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
+												</>
+											)
+										})}
+									</div>
+								)
+							})}
 							<br></br>
 
-							<div className="gradientExample">
+							{/* <div className="gradientExample">
 								{this.props.gradient.map((gradient) =>{
 									return(
 										<>
@@ -92,9 +106,7 @@ class Profile extends Component {
 										</>
 									)
 								})}
-							</div>
-
-							<p>GRADIENT EXAMPLE HERE</p>
+							</div> */}
 
 							<Button variant="contained" color="primary" onClick={this.saveChanges}>Save Changes</Button> 
 						</form></>:
@@ -104,7 +116,7 @@ class Profile extends Component {
 							<p>GRADIENT EXAMPLE HERE</p>
 							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
 
-							<div className="gradientExample">
+							{/* <div className="gradientExample">
 								{this.props.gradient.map((gradient) => {
 									return (
 										<>
@@ -119,7 +131,7 @@ class Profile extends Component {
 										</>
 									)
 								})}
-							</div>
+							</div> */}
 					</>	
 					}
 			</div>
