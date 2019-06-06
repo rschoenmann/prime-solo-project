@@ -71,7 +71,7 @@ class Profile extends Component {
 								<select value={this.props.user.gradient_id} onChange={this.handleInputChange('gradient_id')}>
 									{this.props.gradient.map((gradient) => {
 										return(
-											<option key={gradient.gradientid}>{gradient.name}</option>
+											<option key={gradient.gradientid} value={gradient.gradientid}>{gradient.name}</option>
 										)
 									})}
 								</select></label>
@@ -91,23 +91,6 @@ class Profile extends Component {
 							})}
 							<br></br>
 
-							{/* <div className="gradientExample">
-								{this.props.gradient.map((gradient) =>{
-									return(
-										<>
-										<p>COLORS</p>
-										<ul key={gradient.id}>
-											{gradient.colors.map((color) => {
-												return(
-													<li key={color.value} className="gradientDiv" style={{color: `${color.color}`}}>{color.color}</li>
-												)
-											})}
-										</ul>
-										</>
-									)
-								})}
-							</div> */}
-
 							<Button variant="contained" color="primary" onClick={this.saveChanges}>Save Changes</Button> 
 						</form></>:
 						<><p>Username: {this.props.user.username}</p>
@@ -115,23 +98,6 @@ class Profile extends Component {
 							<p>Default Color Gradient: {this.props.user.gradient_id}</p>
 							<p>GRADIENT EXAMPLE HERE</p>
 							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
-
-							{/* <div className="gradientExample">
-								{this.props.gradient.map((gradient) => {
-									return (
-										<>
-											<p>COLORS</p>
-											<ul key={gradient.id}>
-												{gradient.colors.map((color) => {
-													return (
-														<li key={color.value} className="gradientDiv" style={{ color: `${color.color}` }}>{color.color}</li>
-													)
-												})}
-											</ul>
-										</>
-									)
-								})}
-							</div> */}
 					</>	
 					}
 			</div>
