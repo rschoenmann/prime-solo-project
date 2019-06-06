@@ -41,7 +41,7 @@ class RegisterPage extends Component {
   divClick = (id) => {
     console.log('register div click', id);
     this.setState({
-      gradient: id
+      gradient_id: id
     })
   }
 
@@ -81,7 +81,7 @@ class RegisterPage extends Component {
             </label>
           </div>
           <div>
-            <p>Select default color gradient:</p>
+            <p>Select default color gradient: {this.state.gradient_id}</p>
             {this.props.gradient.map((aGradient) => {
               let id = `${aGradient.gradientid}`
               return (
