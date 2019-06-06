@@ -4,3 +4,19 @@
 	border: 1px solid black;
 	display: inline-block;
 }
+
+.selectGradient {
+	border: 1px solid black;
+	margin: 5px;
+	padding: 10px;
+	width: 150px;
+	height: 75px;
+}
+
+.selectGradient:hover {
+	border: 1.5px solid black;
+	margin: 5px;
+	padding: 10px;
+	width: 150px;
+	height: 75px;
+}
