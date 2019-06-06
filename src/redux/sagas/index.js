@@ -7,6 +7,7 @@ import reviewSaga from './reviewSaga';
 import daySaga from './daySaga';
 import datesSaga from './datesSaga';
 import gradientSaga from './gradientSaga';
+import singleSaga from './singleDaySaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -25,5 +26,6 @@ export default function* rootSaga() {
     daySaga(),
     datesSaga(),
     gradientSaga(),
+    singleSaga(),
   ]);
 }
