@@ -3,21 +3,32 @@ import {connect} from 'react-redux';
 import {Checkbox, Card, CardContent, CardActions, Button, TextField} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
 import moment from 'moment';
-import Moment from 'react-moment';
 import Rating from 'react-rating';
 import Swal from 'sweetalert2';
-import StarRating from '../StarRating/StarRating';
 
 class SingleDay extends Component{
 
 	state = {
 		dayEditable: false,
+		rating: this.props.single.rating,
+		notes: this.props.single.notes,
+		// answers: [
+		// 	{id: 1, answer: false},
+		// 	{id: 1, answer: false},
+		// 	{id: 1, answer: false},
+		// 	{id: 1, answer: false},
+		// 	{id: 1, answer: false}
+		// ]
 	}
 
 	componentDidMount(){
 		this.props.dispatch({type: 'FETCH_SINGLE_DAY', payload: this.props.match.params.id});
 		this.props.dispatch({type: 'FETCH_PROMPT'})
 	}
+
+	handleCheck = (promptid) => {
+		console.log('edit promptid', promptid)
+	};//end handleCheck
 
 	handleDelete = (dayid) => {
 		console.log('DELETE id:', dayid)
@@ -46,9 +57,18 @@ class SingleDay extends Component{
 		})
 	};//end handleEdit
 
+	handleNotes = (event) => {
+		console.log('edit day notes:', event.target.value)
+	};//end handleNotes
+
+	handleRating = (value) =>{
+		console.log('edit day rating:', value)
+	};//end handleRating
+
 
 	render(){
 		let dayDate = moment(this.props.single.date).format('dddd, MMMM Do YYYY');
+		console.log('single day state:', this.state)
 		return(
 			<>
 				{this.state.dayEditable ?
@@ -58,22 +78,24 @@ class SingleDay extends Component{
 							<Card raised key={day.reviewid}>
 								<CardContent>
 									Editing: {dayDate}
-									{day.answers.map((answer, i) => {
+									{day.answers.map((answer) => {
 										return (
-											<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
+											<p key={answer.promptId}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
+												onChange={() => this.handleCheck(answer.promptId)}
 												checked={answer.promptAnswer} color="primary" /></p>
 										)
 									})}
 									Rating: <Rating initialRating={day.rating}
 										emptySymbol={<StarBorder />}
 										fullSymbol={<Star />}
-										start={0} stop={5} />
+										start={0} stop={5} 
+										onClick={this.handleRating}/>
 									<br></br><br></br>
 
 									Notes: <TextField
+										onChange={this.handleNotes}
 										defaultValue={day.notes}
 										id="standard-multiline-static"
-										//label="Notes:"
 										multiline rowsMax="3"
 										placeholder="notes"
 										margin="normal" />
@@ -96,7 +118,7 @@ class SingleDay extends Component{
 									Date: {dayDate}
 									{day.answers.map((answer, i) => {
 										return (
-											<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
+											<p key={answer.promptId}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
 												checked={answer.promptAnswer} color="primary" disabled /></p>
 										)
 									})}

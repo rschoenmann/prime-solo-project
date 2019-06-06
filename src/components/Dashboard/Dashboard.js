@@ -4,7 +4,6 @@ import {Button} from '@material-ui/core';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
-import SingleDay from '../SingleDay/SingleDay';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
