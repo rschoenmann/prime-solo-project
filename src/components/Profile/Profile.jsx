@@ -10,7 +10,7 @@ class Profile extends Component {
 		profileEditable: false,
 		username: this.props.user.username,
 		name: this.props.user.name,
-		gradient_id: 1
+		gradient_id: this.props.user.gradient_id
 	}
 
 	componentDidMount(){
@@ -77,7 +77,7 @@ class Profile extends Component {
 								</select></label>
 							{this.props.gradient.map((aGradient) => {
 								return(
-									<div>
+									<div key={aGradient.gradientid}>
 										<p>{aGradient.name}:</p>
 										{aGradient.colors.map((color, i) => {
 											return(
@@ -96,7 +96,20 @@ class Profile extends Component {
 						<><p>Username: {this.props.user.username}</p>
 							<p>What should we call you: {this.props.user.name}</p>
 							<p>Default Color Gradient: {this.props.user.gradient_id}</p>
-							<p>GRADIENT EXAMPLE HERE</p>
+							{this.props.gradient.map((aGradient) => {
+								if(aGradient.gradientid === this.props.user.gradient_id){
+									return(
+										<>
+										{aGradient.colors.map((color, i) => {
+											return(
+												<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
+											)
+										})}
+										</>
+									)
+								}
+							})}
+							<br></br>
 							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
 					</>	
 					}
