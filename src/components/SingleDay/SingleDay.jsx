@@ -41,33 +41,39 @@ class SingleDay extends Component{
 
 	render(){
 		return(
-			<Card raised key={this.props.single.reviewid}>
-				<CardContent>
-					Date: {this.props.day.date}  ID: {this.props.day.reviewid}
-					{/* {this.props.day.answers.map((answer, i) => {
+			<>
+			{this.props.single.map((day) => {
+				let theDate = moment(day.date).format('dddd, MMMM Do YYYY')
+				return(
+					<Card raised key={day.reviewid}>
+						<CardContent>
+							Date: {theDate} ID: {day.reviewid}
+							{day.answers.map((answer, i) => {
 						return (
 							<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
 								checked={answer.promptAnswer} color="primary" disabled /></p>
-						)
-					})} */}
-					Rating: <Rating initialRating={this.props.day.rating}
-						emptySymbol={<StarBorder />}
-						fullSymbol={<Star />}
-						start={0} stop={5} readonly />
-					<br></br>
-					Notes: {this.props.day.notes}
-				</CardContent>
-				<CardActions>
-					<Button variant="outlined" color="primary" onClick={this.handleEdit}>Edit Day</Button>
-					<Button variant="outlined" color="secondary" onClick={() => this.handleDelete(this.props.day.reviewid)}>Delete Day</Button>
-				</CardActions>
-			</Card>
+							)
+						})}
+							Rating: <Rating initialRating={day.rating}
+								emptySymbol={<StarBorder />}
+								fullSymbol={<Star />}
+								start={0} stop={5} readonly />
+							<br></br><br></br>
+							Notes: {day.notes}
+						</CardContent>
+						<CardActions>
+							<Button variant="outlined" color="primary" onClick={this.handleEdit}>Edit Day</Button>
+							<Button variant="outlined" color="secondary" onClick={() => this.handleDelete(day.reviewid)}>Delete Day</Button>
+						</CardActions>
+					</Card>
+				)
+			})}
+			</>
 		)
 	}
 }
 
 const mapStateToProps = state => ({
-	day: state.day,
 	single: state.single
 });
 
