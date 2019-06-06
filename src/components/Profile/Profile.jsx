@@ -9,7 +9,6 @@ class Profile extends Component {
 	state = {
 		profileEditable: false,
 		username: this.props.user.username,
-		name: this.props.user.name,
 		gradient_id: this.props.user.gradient_id
 	}
 
@@ -59,13 +58,6 @@ class Profile extends Component {
                 				onChange={this.handleInputChange('username')}/></label>
 							<br></br>
 
-							<label htmlFor="name">
-              				What should we call you?:
-              					<input type="text" name="name"
-                				value={this.state.name}
-								onChange={this.handleInputChange('name')} /></label>
-							<br></br>
-
 							<label htmlFor="gradient_id">
 							Default color gradient:
 								<select value={this.props.user.gradient_id} onChange={this.handleInputChange('gradient_id')}>
@@ -81,9 +73,7 @@ class Profile extends Component {
 										<p>{aGradient.name}:</p>
 										{aGradient.colors.map((color, i) => {
 											return(
-												<>
 												<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
-												</>
 											)
 										})}
 									</div>
@@ -92,26 +82,28 @@ class Profile extends Component {
 							<br></br>
 
 							<Button variant="contained" color="primary" onClick={this.saveChanges}>Save Changes</Button> 
-						</form></>:
-						<><p>Username: {this.props.user.username}</p>
-							<p>What should we call you: {this.props.user.name}</p>
-							<p>Default Color Gradient: {this.props.user.gradient_id}</p>
+						</form>
+						</>
+						:
+						<>
 							{this.props.gradient.map((aGradient) => {
 								if(aGradient.gradientid === this.props.user.gradient_id){
 									return(
-										<>
+										<div key={aGradient.gradientid}>
+											<p>Username: {this.props.user.username}</p>
+											<p>Default Color Gradient: {aGradient.name}</p>
 										{aGradient.colors.map((color, i) => {
 											return(
 												<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
 											)
 										})}
-										</>
+										</div>
 									)
 								}
 							})}
 							<br></br>
 							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
-					</>	
+						</>	
 					}
 			</div>
 		)
