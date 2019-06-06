@@ -41,7 +41,7 @@ class SingleDay extends Component{
 
 	render(){
 		return(
-			<Card raised key={this.props.day.reviewid}>
+			<Card raised key={this.props.single.reviewid}>
 				<CardContent>
 					Date: {this.props.day.date}  ID: {this.props.day.reviewid}
 					{/* {this.props.day.answers.map((answer, i) => {
