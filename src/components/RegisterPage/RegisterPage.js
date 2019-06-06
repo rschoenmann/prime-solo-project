@@ -10,6 +10,10 @@ class RegisterPage extends Component {
     gradient_id: 0,
   };
 
+  componentDidMount(){
+    this.props.dispatch({type: 'FETCH_GRADIENT'})
+  }
+
   registerUser = (event) => {
     event.preventDefault();
 
@@ -32,6 +36,13 @@ class RegisterPage extends Component {
     this.setState({
       [propertyName]: event.target.value,
     });
+  }
+
+  divClick = (id) => {
+    console.log('register div click', id);
+    this.setState({
+      gradient: id
+    })
   }
 
   render() {
@@ -70,29 +81,21 @@ class RegisterPage extends Component {
             </label>
           </div>
           <div>
-            <label htmlFor="name">
-              What should we call you:
-              <input
-                type="name"
-                name="name"
-                value={this.state.name}
-                onChange={this.handleInputChangeFor('name')}
-              />
-            </label>
-          </div>
-          <div>
-            <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-age-simple">
-                Color Gradient</InputLabel>
-              <Select value={this.state.gradient_id}
-                onChange={this.handleInputChangeFor('gradient_id')}
-                input={<OutlinedInput labelWidth={18} name="gradient_id" id="outlined-age-simple" />}>
-                <MenuItem value=""><em>None</em></MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
+            <p>Select default color gradient:</p>
+            {this.props.gradient.map((aGradient) => {
+              let id = `${aGradient.gradientid}`
+              return (
+                <div key={aGradient.gradientid} className="selectGradient"
+                  value={this.state.gradient_id} onClick={() => this.divClick(id)}>
+                  <p>{aGradient.name}:</p>
+                  {aGradient.colors.map((color, i) => {
+                    return (
+                      <div key={i} className="gradientDiv" style={{ backgroundColor: `${color.color}` }}></div>
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
           <div>
             <input
@@ -122,6 +125,7 @@ class RegisterPage extends Component {
 // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
   errors: state.errors,
+  gradient: state.gradient,
 });
 
 export default connect(mapStateToProps)(RegisterPage);

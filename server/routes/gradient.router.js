@@ -4,8 +4,8 @@ const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
 
 
-//handles GET route for gradients if user is authenticated
-router.get('/', rejectUnauthenticated, (req, res) => {
+//handles GET route for gradients, users don't need to be registered, this way we can have them select gradients when registering
+router.get('/', (req, res) => {
 	console.log('is authenticated?', req.isAuthenticated);
 	//used json_agg and json_build_object so each gradient row would have an array of 5 objects corresponding to the 5 color values
 	let queryText = `SELECT "gradient"."id" as gradientId, "gradient"."name", json_agg(json_build_object('value', "gradient_color".rating, 'color', "gradient_color".color)) AS "colors" FROM "gradient"
