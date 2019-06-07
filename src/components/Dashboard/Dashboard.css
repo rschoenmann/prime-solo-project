@@ -77,8 +77,16 @@
 .react-calendar-heatmap .color-scale-3 { fill: #44a340; }
 .react-calendar-heatmap .color-scale-4 { fill: #1e6823; } */
 
+/* red to blue id 2 gradient */
 .react-calendar-heatmap .color-scale-1 { fill: #ec2f4b; }
 .react-calendar-heatmap .color-scale-2 { fill: #b14b78; }
 .react-calendar-heatmap .color-scale-3 { fill: #7667a5; }
 .react-calendar-heatmap .color-scale-4 { fill: #3b83d2; }
 .react-calendar-heatmap .color-scale-5 { fill: #009fff; }
+
+/* yellow to purple id 4 gradient */
+.react-calendar-heatmap .color-scale-4-1 { fill: #16003b; }
+.react-calendar-heatmap .color-scale-4-2 { fill: #52004b; }
+.react-calendar-heatmap .color-scale-4-3 { fill: #8c1127; }
+.react-calendar-heatmap .color-scale-4-4 { fill: #ffad5c; }
+.react-calendar-heatmap .color-scale-4-5 { fill: #ffe270; }

@@ -18,6 +18,7 @@ class Dashboard extends Component {
 
 	componentDidMount(){
 		this.props.dispatch({type: 'FETCH_DAY'});
+		this.props.dispatch({type: 'FETCH_GRADIENT'});
 		//getDates gets today's date and the date a month ago in order to set initial start and end dates for Heatmap Calendar
 		this.getDates();
 		ReactTooltip.rebuild();
@@ -47,8 +48,12 @@ class Dashboard extends Component {
 	};//end handleAdd
 
 	handleDateClick = (value) => {
-		console.log('handleDate click value:', value.reviewid);
-		this.props.history.push(`/singleDay/${value.reviewid}`)
+		if(!value){
+			Swal.fire('Sorry, no entry for this day!')
+		}else{
+			this.props.history.push(`/singleDay/${value.reviewid}`)
+		}
+		
 	};//end handleDateClick
 
 	render() {
@@ -61,6 +66,16 @@ class Dashboard extends Component {
 				<p>Select date range to view:</p>
 				<DateRangePicker onChange={this.dateChange}
 					value={[new Date(), new Date()]} />
+
+				<label htmlFor="gradientSelect">
+					Select a gradient:
+				<select>
+					{this.props.gradient.map((gradient) => {
+						return(
+							<option key={gradient.gradientid} value={gradient.id}>{gradient.name}</option>
+						)
+					})}
+					</select></label>
 				
 				<CalendarHeatmap
 					horizontal={false}
@@ -73,7 +88,9 @@ class Dashboard extends Component {
 					tooltipDataAttrs={(value) => {return{'data-tooltip': 'Tooltip: ' + value }}}
         			showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-					onClick={this.handleDateClick}/>
+					onClick={this.handleDateClick}
+					//titleForValue={(value) => `Date is ${value.date}`}
+					onMouseOver={(event, value) => console.log(value.date)}/>
       			<ReactTooltip />
 			</div>
 		)
@@ -83,6 +100,7 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
 	day: state.day,
 	dates: state.dates,
+	gradient: state.gradient,
 });
 
 // this allows us to use <App /> in index.js

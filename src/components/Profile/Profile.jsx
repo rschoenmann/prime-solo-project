@@ -104,15 +104,6 @@ class Profile extends Component {
 									<Button variant="contained" color="primary" onClick={this.cancelEdit}>Cancel</Button>
 									<Button variant="contained" color="primary" onClick={this.saveChanges}>Save Changes</Button> 
 								</form>
-										// <div key={aGradient.gradientid}>
-										// 	<p>Username: {this.props.user.username}</p>
-										// 	<p>Default Color Gradient: {aGradient.name}</p>
-										// 	{aGradient.colors.map((color, i) => {
-										// 		return (
-										// 			<div key={i} className="gradientDiv" style={{ backgroundColor: `${color.color}` }}></div>
-										// 		)
-										// 	})}
-										// </div>
 									)
 								}
 							})}
