@@ -78,6 +78,21 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 	}
 });//end POST
 
+router.put('/', rejectUnauthenticated, (req, res) => {
+	console.log('req.body:', req.body)
+	let queryText = `UPDATE "review"
+		SET "notes" = $1
+		WHERE "id" = $2 AND "user_id" = $3;`;
+	let queryValues = [req.body.notes, req.body.id, req.user.id];
+	pool.query(queryText, queryValues)
+		.then(() => {
+			res.sendStatus(200)
+		}).catch((error) => {
+			console.log('error in user put:', error);
+			res.sendStatus(500);
+		})
+});//end PUT
+
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
 	console.log('is authenticated?', req.isAuthenticated());
 	console.log('req.params.id:', req.params.id);

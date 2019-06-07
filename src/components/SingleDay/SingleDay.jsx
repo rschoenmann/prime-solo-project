@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, Card, CardContent, CardActions, Button, TextField} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
-import moment from 'moment';
 import Moment from 'react-moment';
 import Rating from 'react-rating';
 import Swal from 'sweetalert2';
@@ -11,15 +10,7 @@ class SingleDay extends Component{
 
 	state = {
 		dayEditable: false,
-		rating: this.props.single.rating,
-		notes: this.props.single.notes,
-		// answers: [
-		// 	{id: 1, answer: false},
-		// 	{id: 1, answer: false},
-		// 	{id: 1, answer: false},
-		// 	{id: 1, answer: false},
-		// 	{id: 1, answer: false}
-		// ]
+		notes: ''
 	}
 
 	componentDidMount(){
@@ -48,6 +39,7 @@ class SingleDay extends Component{
 					'Deleted!',
 					'Day has been deleted.',
 					'success')
+				this.props.history.push('/dashboard')
 			}//end if statement
 		});
 	};//end handleDelete
@@ -59,12 +51,11 @@ class SingleDay extends Component{
 	};//end handleEdit
 
 	handleNotes = (event) => {
-		console.log('edit day notes:', event.target.value)
+		console.log('edit day notes:', event.target.value);
+		this.setState({
+			notes: event.target.value
+		})
 	};//end handleNotes
-
-	handleRating = (value) =>{
-		console.log('edit day rating:', value)
-	};//end handleRating
 
 	saveEdit = () => {
 		this.handleEdit();
@@ -73,6 +64,7 @@ class SingleDay extends Component{
 			title: 'Thanks!',
 			text: 'Your changes have been saved',
 		});
+		this.props.dispatch({type: 'EDIT_DAY', payload: {id: this.props.match.params.id, notes: this.state.notes}})
 	};//end saveEdit
 
 
@@ -91,14 +83,13 @@ class SingleDay extends Component{
 										return (
 											<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
 												onChange={() => this.handleCheck(i)}
-												checked={answer.promptAnswer} color="primary" /></p>
+												checked={answer.promptAnswer} color="primary" disabled/></p>
 										)
 									})}
 									Rating: <Rating initialRating={day.rating}
 										emptySymbol={<StarBorder />}
 										fullSymbol={<Star />}
-										start={0} stop={5} 
-										onClick={this.handleRating}/>
+										start={0} stop={5} readonly/>
 									<br></br><br></br>
 
 									Notes: <TextField
@@ -108,6 +99,7 @@ class SingleDay extends Component{
 										multiline rowsMax="3"
 										placeholder="notes"
 										margin="normal" />
+
 								</CardContent>
 								<CardActions>
 									<Button variant="outlined" color="primary" onClick={this.handleEdit}>Cancel Edit</Button>
@@ -145,6 +137,7 @@ class SingleDay extends Component{
 							</Card>
 						)
 					})}
+						<pre>{JSON.stringify(this.props.single)}</pre>
 				</>//end isNOTeditable
 				}
 				{/* end ternary statment for conditional rendering if editable or not  */}

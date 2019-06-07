@@ -1,6 +1,16 @@
 import axios from 'axios';
 import {put, takeLatest} from 'redux-saga/effects';
 
+function* editDay(action){
+	try{
+		console.log('editDay action', action.payload)
+		yield axios.put('/api/day', action.payload)
+		yield put({type: 'FETCH_SINGLE_DAY', payload: action.payload.id})
+	} catch (error){
+		console.log('edit day request failed', error)
+	}
+}
+
 function* fetchDay() {
 	try {
 		const response = yield axios.get('api/day');
@@ -23,6 +33,7 @@ function* deleteDay(action){
 function* daySaga() {
 	yield takeLatest('FETCH_DAY', fetchDay);
 	yield takeLatest('DELETE_DAY', deleteDay);
+	yield takeLatest('EDIT_DAY', editDay);
 }
 
 export default daySaga;

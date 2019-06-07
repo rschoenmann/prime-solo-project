@@ -58,6 +58,7 @@ class Profile extends Component {
 
 	render(){
 		console.log('is profile editable?', this.state.profileEditable)
+		console.log('profile state', this.state)
 		return(
 			<div>
 				<h2>{this.props.user.username}'s Profile</h2>
@@ -128,6 +129,8 @@ class Profile extends Component {
 							})}
 							<br></br>
 							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
+
+						<pre>{JSON.stringify(this.props.user)}</pre>
 						</>	
 					}
 			</div>
