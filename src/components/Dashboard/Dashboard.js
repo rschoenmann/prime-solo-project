@@ -14,6 +14,7 @@ class Dashboard extends Component {
 			startDate: '',
 			endDate: '',
 			// dates: this.props.days
+			
 		}
 
 	componentDidMount(){
