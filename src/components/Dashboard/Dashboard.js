@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button} from '@material-ui/core';
+import {Button, Tooltip} from '@material-ui/core';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
@@ -57,12 +57,25 @@ class Dashboard extends Component {
 	};//end handleDateClick
 
 	render() {
+		let addDayButton;
+		let today = new Date();
+		console.log('today:', today)
+		console.log('today.getDate', this.props.day.length)
+		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
+		for(let i=0; i<this.props.day.length; i++){
+			if (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10)){
+				addDayButton = <Tooltip title="You've already added something today!" aria-label="Add" ><Button variant="contained" >Rate Today</Button></Tooltip>
+			} else {
+				addDayButton = <Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
+			}
+		}
 		return (
 			<div>
 				<h2>Dashboard!</h2>
 				
-				<Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
+				{addDayButton}
 				<br></br><br></br>
+				
 				<p>Select date range to view:</p>
 				<DateRangePicker onChange={this.dateChange}
 					value={[new Date(), new Date()]} />

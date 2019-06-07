@@ -39,7 +39,7 @@ class SingleDay extends Component{
 					'Deleted!',
 					'Day has been deleted.',
 					'success')
-				this.props.history.push('/dashboard')
+				this.props.history.push('/home')
 			}//end if statement
 		});
 	};//end handleDelete
