@@ -1,11 +1,11 @@
 const express = require('express');
 const pool = require('../modules/pool');
-const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
 
 router.get('/:id', rejectUnauthenticated, (req, res) => {
 	console.log('single day query params', req.params.id);
-	let queryText = `SELECT "review"."id" as reviewId, "review"."date", "review"."user_id", "review"."rating", "review"."notes", json_agg(json_build_object('promptId', "prompt".id, 'promptText', "prompt".prompt, 'promptAnswer', "prompt_review".answer)) as answers FROM "review"
+	let queryText = `SELECT "review"."id" as reviewId, "date", "user_id", "rating", "notes", json_agg(json_build_object('promptId', "prompt".id, 'promptText', "prompt".prompt, 'promptAnswer', "prompt_review".answer)) as answers FROM "review"
 JOIN "prompt_review" ON "prompt_review".review_id = "review".id
 JOIN "prompt" ON "prompt_review".prompt_id = "prompt".id
 WHERE "review".user_id = $1

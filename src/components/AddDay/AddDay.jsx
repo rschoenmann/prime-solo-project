@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, TextField, FormControl, FormControlLabel, FormLabel, FormGroup, FormHelperText, Button} from '@material-ui/core';
+import {Card, CardContent, CardActions, Checkbox, TextField, Paper, Button} from '@material-ui/core';
 import StarRating from '../StarRating/StarRating';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
+import {withStyles} from '@material-ui/core/styles';
 
+
+const styles = {
+	root: {
+		width: '350px',
+		height: '200px',
+	}
+}
 
 class AddDay extends Component {
 
@@ -43,46 +51,48 @@ class AddDay extends Component {
 	};//end handleSubmit
 
 	render(){
+		let today = <Moment local format="MM/DD/YYYY"></Moment>;
 		return(
 			<>
-			<FormControl>
-				<FormLabel>ENTER DATA</FormLabel>
-				<br></br>
-				<FormGroup>
-						<Moment local format="MM/DD/YYYY"></Moment>
-					{/* <TextField id="date" label="Date" type="date"
-						defaultValue="2019-05-28" InputLabelProps={{shrink: true}} /> */}
-					<br></br><br></br>
-					{this.props.prompt.map((prompt) => {
-						// isChecked = prompt.id;
-						const id = prompt.id
-						return(
-								<FormControlLabel key={prompt.id} 
-								control={<Checkbox onChange={() => this.handleCheck(prompt.id)} value={prompt.id} 
-								checked={this.props.review[id]} color="primary"/>}
-								label={prompt.prompt} />
+				<Card>
+					<CardContent>
+						Entering Data For: {today}
+						{this.props.prompt.map((prompt) => {
+							// isChecked = prompt.id;
+							const id = prompt.id
+							return (
+								<p key={prompt.id}>{prompt.prompt}: <Checkbox value={prompt.id}
+									onChange={() => this.handleCheck(prompt.id)}
+									checked={this.props.review[id]} color="primary" /></p>
+								
 							)
 						})}
-				<p>How would you rate today overall?</p>
-				
-				<StarRating />
-				
-				<TextField
-					onChange={this.handleNotes}
-					id="standard-multiline-static"
-					label="Any notes to add? (optional)"
-					multiline rowsMax="3"
-					placeholder="notes"
-					margin="normal"/>
 
-				</FormGroup>
-				{/* <FormHelperText>Be careful</FormHelperText> */}
+						<br></br>
+						<p>How would you rate today overall?</p>
+						<StarRating />
 
-				<pre>{JSON.stringify(this.props.review)}</pre>
-			</FormControl>
-				<br></br>
-			<Button variant="contained" color="primary" onClick={this.handleSubmit}>
-				Submit Day</Button>
+						<br></br><br></br>
+
+						<Paper className={this.props.classes.root}>
+							<TextField
+								onChange={this.handleNotes}
+								id="standard-multiline-static"
+								label="Any notes to add? (optional)"
+								multiline rowsMax="3"
+								placeholder="notes"
+								margin="normal" /></Paper>
+								<br></br>
+					</CardContent>
+					<CardActions>
+						<Button variant="contained" color="primary" onClick={this.handleSubmit}>
+							Submit Day</Button>
+					</CardActions>
+				</Card>
+
+
+
+			
 			</>
 		)
 	}
@@ -93,4 +103,4 @@ const mapStateToProps = state => ({
 	review: state.review
 });
 
-export default connect(mapStateToProps)(AddDay);
+export default withStyles(styles)(connect(mapStateToProps)(AddDay));

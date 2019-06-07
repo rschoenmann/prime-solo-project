@@ -14,7 +14,6 @@ class Dashboard extends Component {
 			startDate: '',
 			endDate: '',
 			// dates: this.props.days
-			
 		}
 
 	componentDidMount(){
@@ -62,7 +61,7 @@ class Dashboard extends Component {
 			<div>
 				<h2>Dashboard!</h2>
 				
-				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add Rating For Today</Button>
+				<Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
 				<br></br><br></br>
 				<p>Select date range to view:</p>
 				<DateRangePicker onChange={this.dateChange}
@@ -89,9 +88,7 @@ class Dashboard extends Component {
 					tooltipDataAttrs={(value) => {return{'data-tooltip': 'Tooltip: ' + value }}}
         			showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-					onClick={this.handleDateClick}
-					//titleForValue={(value) => `Date is ${value.date}`}
-					onMouseOver={(event, value) => console.log(value.date)}/>
+					onClick={this.handleDateClick}/>
       			<ReactTooltip />
 			</div>
 		)

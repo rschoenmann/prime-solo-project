@@ -23,9 +23,11 @@ const Nav = (props) => (
             Add Day </Link>
           <Link className="nav-link" to="/profile">
             Profile </Link>
-          <Link className="nav-link" to="/info">
+          <Link className="nav-link" to="/stats">
+            Stats </Link>
+          {/* <Link className="nav-link" to="/info">
             Info Page
-          </Link>
+          </Link> */}
           <LogOutButton className="nav-link"/>
         </>
       )}

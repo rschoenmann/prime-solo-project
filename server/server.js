@@ -14,6 +14,7 @@ const promptRouter = require('./routes/prompt.router');
 const dayRouter = require('./routes/day.router');
 const gradientRouter = require('./routes/gradient.router');
 const singleDayRouter = require('./routes/singleDay.router');
+const statsRouter = require('./routes/stats.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -32,6 +33,7 @@ app.use('/api/prompt', promptRouter);
 app.use('/api/day', dayRouter);
 app.use('/api/gradient', gradientRouter);
 app.use('/api/singleDay', singleDayRouter);
+app.use('/api/stats', statsRouter);
 
 // Serve static files
 app.use(express.static('build'));
