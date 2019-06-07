@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {FormControl, InputLabel, Select, MenuItem, OutlinedInput} from '@material-ui/core';
+// import {FormControl, InputLabel, Select, MenuItem, OutlinedInput} from '@material-ui/core';
 
 class RegisterPage extends Component {
   state = {

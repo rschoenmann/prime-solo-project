@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, Tooltip} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
+import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 class Dashboard extends Component {
 
@@ -22,8 +24,9 @@ class Dashboard extends Component {
 		this.props.dispatch({type: 'FETCH_GRADIENT'});
 		//getDates gets today's date and the date a month ago in order to set initial start and end dates for Heatmap Calendar
 		this.getDates();
-		ReactTooltip.rebuild();
 	};//end componentDidMount
+
+
 
 	getDates = () => {
 		let currentDate = moment().format('YYYY-MM-DD');
@@ -65,13 +68,14 @@ class Dashboard extends Component {
 	};//end selectGradient
 
 	render() {
+		const customTooltipDataAttrs = (value) => ({ 'data-tip': value });
 		console.log('this.state dashboard', this.state)
 		let addDayButton;
 		let today = new Date();
 		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
 		for(let i=0; i<this.props.day.length; i++){
 			if (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10)){
-				addDayButton = <Tooltip title="You've already added something today!" aria-label="Add" ><Button variant="contained" >Rate Today</Button></Tooltip>
+				addDayButton = <Button variant="contained" >Rate Today</Button>
 			} else {
 				addDayButton = <Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
 			}
@@ -105,11 +109,21 @@ class Dashboard extends Component {
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
 						return `color-scale-${this.state.gradient_id}-${value.rating}`;}}
-					tooltipDataAttrs={(value) => {return{'data-tooltip': 'Tooltip: ' + value }}}
-        			showWeekdayLabels={true}
+					showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-					onClick={this.handleDateClick}/>
-      			<ReactTooltip />
+					onClick={this.handleDateClick}
+					transformDayElement={(rect, value, index) => {
+						const tooltip = (
+							<Tooltip id="tooltip">{value ? moment(value.date).format('dddd MMMM Do YYYY') : ''}</Tooltip>
+						);
+						return (
+							<OverlayTrigger placement="top" overlay={tooltip}>
+								{rect}
+							</OverlayTrigger>
+						);
+					}}/>
+					<ReactTooltip/>
+      			
 			</div>
 		)
 	}
