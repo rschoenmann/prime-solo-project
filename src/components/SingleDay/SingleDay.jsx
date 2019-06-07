@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Checkbox, Card, CardContent, CardActions, Button, TextField} from '@material-ui/core';
 import {Star, StarBorder} from '@material-ui/icons';
 import moment from 'moment';
+import Moment from 'react-moment';
 import Rating from 'react-rating';
 import Swal from 'sweetalert2';
 
@@ -86,7 +87,7 @@ class SingleDay extends Component{
 						return (
 							<Card raised key={day.reviewid}>
 								<CardContent>
-									Editing: {dayDate}
+									Editing: <Moment local format="dddd, MMMM Do YYYY">{day.date}</Moment>
 									{day.answers.map((answer) => {
 										return (
 											<p key={answer.promptId}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
@@ -124,7 +125,7 @@ class SingleDay extends Component{
 						return (
 							<Card raised key={day.reviewid}>
 								<CardContent>
-									Date: {dayDate}
+									Date: <Moment local format="dddd, MMMM Do YYYY">{day.date}</Moment>
 									{day.answers.map((answer, i) => {
 										return (
 											<p key={answer.promptId}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
