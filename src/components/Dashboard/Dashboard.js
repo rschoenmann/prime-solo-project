@@ -13,6 +13,7 @@ class Dashboard extends Component {
 	state = {
 			startDate: '',
 			endDate: '',
+			gradient_id: this.props.user.gradient_id
 			// dates: this.props.days
 		}
 
@@ -56,11 +57,17 @@ class Dashboard extends Component {
 		
 	};//end handleDateClick
 
+	selectGradient = (event) => {
+		console.log('gradient value', event.target.value)
+		this.setState({
+			gradient_id: event.target.value
+		})
+	};//end selectGradient
+
 	render() {
+		console.log('this.state dashboard', this.state)
 		let addDayButton;
 		let today = new Date();
-		console.log('today:', today)
-		console.log('today.getDate', this.props.day.length)
 		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
 		for(let i=0; i<this.props.day.length; i++){
 			if (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10)){
@@ -82,10 +89,10 @@ class Dashboard extends Component {
 
 				<label htmlFor="gradientSelect">
 					Select a gradient:
-				<select>
+				<select onChange={this.selectGradient}>
 					{this.props.gradient.map((gradient) => {
 						return(
-							<option key={gradient.gradientid} value={gradient.id}>{gradient.name}</option>
+							<option key={gradient.gradientid} value={gradient.gradientid}>{gradient.name}</option>
 						)
 					})}
 					</select></label>
@@ -97,7 +104,7 @@ class Dashboard extends Component {
 					values={this.props.day} 
 					classForValue={(value) => {
 						if (!value) {return 'color-empty';}
-						return `color-scale-${value.rating}`;}}
+						return `color-scale-${this.state.gradient_id}-${value.rating}`;}}
 					tooltipDataAttrs={(value) => {return{'data-tooltip': 'Tooltip: ' + value }}}
         			showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
@@ -112,6 +119,7 @@ const mapStateToProps = state => ({
 	day: state.day,
 	dates: state.dates,
 	gradient: state.gradient,
+	user: state.user
 });
 
 // this allows us to use <App /> in index.js
