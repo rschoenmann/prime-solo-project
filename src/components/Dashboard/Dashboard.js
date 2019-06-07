@@ -61,7 +61,7 @@ class Dashboard extends Component {
 			<div>
 				<h2>Dashboard!</h2>
 				
-				<Button variant="contained" color="primary" onClick={this.handleAdd}>Add Rating For Today</Button>
+				<Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
 				<br></br><br></br>
 				<p>Select date range to view:</p>
 				<DateRangePicker onChange={this.dateChange}

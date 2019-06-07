@@ -3,6 +3,10 @@
 	fill: #aaa;
 }
 
+.react-calendar-heatmap {
+	width: 75%;
+}
+
 .react-calendar-heatmap .react-calendar-heatmap-small-text {
 	font-size: 5px;
 }

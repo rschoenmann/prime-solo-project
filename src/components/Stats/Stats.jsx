@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 class Stats extends Component{
 	render(){
 		return(
-			<p>STATS</p>
+			<h2>STATS :(</h2>
 		)
 	}
 }

@@ -77,7 +77,6 @@ class SingleDay extends Component{
 
 
 	render(){
-		let dayDate = moment(this.props.single.date).format('dddd, MMMM Do YYYY');
 		console.log('single day state:', this.state)
 		return(
 			<>
@@ -88,10 +87,10 @@ class SingleDay extends Component{
 							<Card raised key={day.reviewid}>
 								<CardContent>
 									Editing: <Moment local format="dddd, MMMM Do YYYY">{day.date}</Moment>
-									{day.answers.map((answer) => {
+									{day.answers.map((answer, i) => {
 										return (
-											<p key={answer.promptId}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
-												onChange={() => this.handleCheck(answer.promptId)}
+											<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
+												onChange={() => this.handleCheck(i)}
 												checked={answer.promptAnswer} color="primary" /></p>
 										)
 									})}
@@ -128,7 +127,7 @@ class SingleDay extends Component{
 									Date: <Moment local format="dddd, MMMM Do YYYY">{day.date}</Moment>
 									{day.answers.map((answer, i) => {
 										return (
-											<p key={answer.promptId}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
+											<p key={i}>{answer.promptText}: <Checkbox value={answer.promptAnswer}
 												checked={answer.promptAnswer} color="primary" disabled /></p>
 										)
 									})}
