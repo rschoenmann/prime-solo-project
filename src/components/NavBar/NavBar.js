@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {LinkContainer} from "react-router-bootstrap";
 import {connect} from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import Nav from 'react-bootstrap/Nav';
@@ -7,50 +8,36 @@ import './Nav.css';
 
 const NavBar = (props) => (
   <div className="nav">
-    <Nav variant="tabs" defaultActiveKey="/home">
-		<Nav.Item>
-			<Nav.Link href="/home" className="nav-link">
-				<h2 className="nav-title">Reflexive Reflection</h2></Nav.Link>
-		</Nav.Item>
-
+    <Link to="/home">
+      <h2 className="nav-title">Reflexive Reflection</h2>
+    </Link>
     <div className="nav-right">
-		<Nav.Item className="nav-link">
-			{/* Show this link if they are logged in or not,
-		    but call this link 'Dashboard' if they are logged in,
-		    and call this link 'Login / Register' if they are not */}
-			<Nav.Link href="/home" >
-				{props.user.id ? 'Dashboard' : 'Login / Register'}</Nav.Link>
-		</Nav.Item>
-
+      <Link className="nav-link" to="/home">
+        {/* Show this link if they are logged in or not,
+        but call this link 'Dashboard' if they are logged in,
+        and call this link 'Login / Register' if they are not */}
+        {props.user.id ? 'Dashboard' : 'Login / Register'}
+      </Link>
       {/* Show the link to the info page, AddDay, Profile and the logout button if the user is logged in */}
       {props.user.id && (
         <>
-			<Nav.Item className="nav-link">
-				<Nav.Link href="/profile">
-					Profile</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="nav-link">
-				<Nav.Link href="/stats">
-					Stats</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="nav-link">
-				<Nav.Link href="/addDay">
-					ADD DAY</Nav.Link>
-			</Nav.Item>
-          {/* <Link className="nav-link" to="/info">Info Page</Link> */}
-		  <Nav.Item className="nav-link">
-				<LogOutButton className="nav-link" />
-		  </Nav.Item>
-          
+          <Link className="nav-link" to="/addDay">
+            Add Day </Link>
+          <Link className="nav-link" to="/profile">
+            Profile </Link>
+          <Link className="nav-link" to="/stats">
+            Stats </Link>
+          {/* <Link className="nav-link" to="/info">
+            Info Page
+          </Link> */}
+          <LogOutButton className="nav-link"/>
         </>
       )}
       {/* Always show this link since the about page is not protected */}
-		<Nav.Item className="nav-link">
-			<Nav.Link href="/about">
-				About</Nav.Link>
-		</Nav.Item>
+      <Link className="nav-link" to="/about">
+        About
+      </Link>
     </div>
-	</Nav>
   </div>
 );
 
