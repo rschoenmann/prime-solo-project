@@ -114,7 +114,7 @@ class Dashboard extends Component {
 					onClick={this.handleDateClick}
 					transformDayElement={(rect, value, index) => {
 						const tooltip = (
-							<Tooltip id="tooltip">{value ? moment(value.date).format('dddd MMMM Do YYYY') : ''}</Tooltip>
+							<Tooltip id="tooltip">{value ? moment(value.date).format('MMM Do') : ''}</Tooltip>
 						);
 						return (
 							<OverlayTrigger placement="top" overlay={tooltip}>

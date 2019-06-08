@@ -3,7 +3,7 @@ import {HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 
-import Nav from '../Nav/Nav';
+import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
@@ -27,7 +27,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav />
+          <NavBar />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
