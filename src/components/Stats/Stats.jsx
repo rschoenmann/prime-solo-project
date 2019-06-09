@@ -65,8 +65,24 @@ class Stats extends Component{
 	charts = () => {
 		return [
 			<div className="chartDiv">
+				<p>ONE</p>
+			</div>,
 
-			</div>
+			<div className="chartDiv">
+				<p>TWO</p>
+			</div>,
+
+			<div className="chartDiv">
+				<p>THREE</p>
+			</div>,
+
+			<div className="chartDiv">
+				<p>FOUR</p>
+			</div>,
+
+			<div className="chartDiv">
+				<p>FIVE</p>
+			</div>,
 		]
 	}
 	

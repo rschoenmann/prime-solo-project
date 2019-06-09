@@ -59,6 +59,7 @@ class Profile extends Component {
 	render(){
 		console.log('is profile editable?', this.state.profileEditable)
 		console.log('profile state', this.state)
+		let gradientDisplay;
 		return(
 			<div>
 				<h2>{this.props.user.username}'s Profile</h2>

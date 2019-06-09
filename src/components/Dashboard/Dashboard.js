@@ -67,8 +67,8 @@ class Dashboard extends Component {
 		
 	};//end handleDateClick
 
-	selectGradient = (propertyToChange, event) => {
-		console.log('gradient value', event.target.value)
+	selectGradient = (event) => {
+		//console.log('gradient value', event.target.value)
 		this.setState({
 			gradient_id: event.target.value
 		})
@@ -116,13 +116,26 @@ class Dashboard extends Component {
 					defaultValue={today}
 					InputLabelProps={{shrink: true,}}
 					onChange={this.dateChangeEnd('endDate')}/>
+{/* 
+				{this.props.gradient.map((aGradient) => {
+					if (aGradient.gradientid === this.state.gradient_id) {
+						return (
+							<>{aGradient.colors.map((color, i) => {
+									return (
+										<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
+									)
+								})}
+							</>
+						)
+					}
+				})} */}
 
 				<label htmlFor="gradientSelect">
 					Select a gradient:
 				<select onChange={this.selectGradient}>
 					{this.props.gradient.map((gradient) => {
 						return(
-							<option key={gradient.gradientid} value={gradient.gradientid}>{gradient.name}</option>
+							<option key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{background: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color})`}}>{gradient.name}</option>
 						)
 					})}
 					</select></label>
