@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button} from '@material-ui/core';
+import {Button, TextField} from '@material-ui/core';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
-import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import DateRangePicker from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -15,6 +16,7 @@ class Dashboard extends Component {
 	state = {
 			startDate: '',
 			endDate: '',
+			focusedInput: '',
 			gradient_id: this.props.user.gradient_id
 			// dates: this.props.days
 		}
@@ -68,7 +70,7 @@ class Dashboard extends Component {
 	render() {
 		console.log('this.state dashboard', this.state)
 		let addDayButton;
-		let today = new Date();
+		let today = moment().format('YYYY-MM-DD');
 		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
 		for(let i=0; i<this.props.day.length; i++){
@@ -86,8 +88,19 @@ class Dashboard extends Component {
 				<br></br><br></br>
 				
 				<p>Select date range to view:</p>
-				<DateRangePicker onChange={this.dateChange}
-					value={[monthAgo, today]} />
+				<TextField
+					id="startDate"
+					label="Start date"
+					type="date"
+					defaultValue={today}
+					InputLabelProps={{shrink: true,}}/>
+
+				<TextField
+					id="endDate"
+					label="End Date"
+					type="date"
+					defaultValue={monthAgo}
+					InputLabelProps={{shrink: true,}}/>
 
 				<label htmlFor="gradientSelect">
 					Select a gradient:

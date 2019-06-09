@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {HorizontalBar, Doughnut} from 'react-chartjs-2';
 //import moment from 'moment';
 import {TextField} from '@material-ui/core';
-import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
 class Stats extends Component{
 
@@ -19,8 +18,7 @@ class Stats extends Component{
 			<div>
 				<h2>Stats</h2>
 				<p>Select date range:</p>
-				<DateRangePicker onChange={this.dateRange}
-					value={[new Date(), new Date()]} />
+				
 				    
 				<h2>Doughnut Example</h2>
 				<Doughnut data={{
