@@ -4,20 +4,23 @@ const {rejectUnauthenticated} = require('../modules/authentication-middleware');
 const router = express.Router();
 
 router.get('/rating', rejectUnauthenticated, (req, res) => {
-	console.log('stats rating req.body', req.params.id);
+	console.log('stats req.query:', req.query);
+	let startDate = req.query.startDate;
+	let endDate = req.query.endDate;
 	let queryText = `SELECT "rating", count(*) FROM "review"
-		WHERE "date" BETWEEN '2019-04-01' AND '2019-05-30'
-		AND "user_id" = 2
+		WHERE "date" BETWEEN $1 AND $2
+		AND "user_id" = $3
 		GROUP BY "rating";`;
-	let queryValue = []
-	pool.query(queryText, queryValue)
+	pool.query(queryText, [startDate, endDate, req.user.id])
 		.then((result) => {
-			console.log('single day get results:', result.rows);
+			console.log('stats rating GET:', result.rows);
 			res.send(result.rows)
 		}).catch((error) => {
-			console.log('error in single day GET:', error)
+			console.log('error in stats rating GET:', error)
 		});
 });//end single day GET
+
+
 
 /**
  * POST route template

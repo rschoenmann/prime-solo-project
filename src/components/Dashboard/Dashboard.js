@@ -26,8 +26,6 @@ class Dashboard extends Component {
 		this.getDates();
 	};//end componentDidMount
 
-
-
 	getDates = () => {
 		let currentDate = moment().format('YYYY-MM-DD');
 		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
