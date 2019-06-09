@@ -4,8 +4,6 @@ import {Button, TextField} from '@material-ui/core';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
-import DateRangePicker from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -16,7 +14,6 @@ class Dashboard extends Component {
 	state = {
 			startDate: '',
 			endDate: '',
-			focusedInput: '',
 			gradient_id: this.props.user.gradient_id
 			// dates: this.props.days
 		}
@@ -38,14 +35,24 @@ class Dashboard extends Component {
 		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: [monthAgo, currentDate]}})
 	};//end getNow
 
-	dateChange = (value) => {
-		console.log('dateChange:', value);
+	dateChange = propertyName => (event) => {
+		console.log('dateChange:', event.target.value);
 		this.setState({
-			startDate: moment(value[0]).format('YYYY-MM-DD'),
-			endDate: moment(value[1]).format('YYYY-MM-DD')
+			[propertyName]: event.target.value
 		});
-		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: value}});
 	};//end dateChange
+
+	dateChangeEnd = propertyName => (event) => {
+		this.setState({
+			[propertyName]: event.target.value
+		});
+		this.dateChangeSubmit();
+	}
+
+	dateChangeSubmit = () => {
+		console.log('datechange state:', this.state);
+		this.props.dispatch({type: 'FETCH_DATES', payload: this.state});
+	}
 
 	handleAdd = () => {
 		this.props.history.push('/addDay')
@@ -60,7 +67,7 @@ class Dashboard extends Component {
 		
 	};//end handleDateClick
 
-	selectGradient = (event) => {
+	selectGradient = (propertyToChange, event) => {
 		console.log('gradient value', event.target.value)
 		this.setState({
 			gradient_id: event.target.value
@@ -70,16 +77,24 @@ class Dashboard extends Component {
 	render() {
 		console.log('this.state dashboard', this.state)
 		let addDayButton;
+		// let today = moment().format('YYYY-MM-DD');
+		// let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		let today = moment().format('YYYY-MM-DD');
 		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
 		for(let i=0; i<this.props.day.length; i++){
-			if (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10)){
+			let theDate = new Date(this.props.day[i].date);
+			let dateStringed = theDate.toISOString().substr(0, 10);
+			let todayDate = new Date();
+			let todayStringed = todayDate.toISOString().substr(0, 10);
+			if (dateStringed === todayStringed){
 				addDayButton = <Button variant="contained" >Rate Today</Button>
 			} else {
 				addDayButton = <Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
 			}
 		}
+
+		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
 			<div>
 				<h2>Dashboard!</h2>
@@ -90,17 +105,17 @@ class Dashboard extends Component {
 				<p>Select date range to view:</p>
 				<TextField
 					id="startDate"
-					label="Start date"
 					type="date"
-					defaultValue={today}
-					InputLabelProps={{shrink: true,}}/>
+					defaultValue={monthAgo}
+					InputLabelProps={{shrink: true,}} 
+					onChange={this.dateChange('startDate')}/>
 
 				<TextField
 					id="endDate"
-					label="End Date"
 					type="date"
-					defaultValue={monthAgo}
-					InputLabelProps={{shrink: true,}}/>
+					defaultValue={today}
+					InputLabelProps={{shrink: true,}}
+					onChange={this.dateChangeEnd('endDate')}/>
 
 				<label htmlFor="gradientSelect">
 					Select a gradient:
