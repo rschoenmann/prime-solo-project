@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {HorizontalBar, Doughnut} from 'react-chartjs-2';
 import moment from 'moment';
-import {TextField, Button} from '@material-ui/core';
+import {TextField, Button, MobileStepper, Paper, Typography, SwipeableViews} from '@material-ui/core';
 
 class Stats extends Component{
 
 	state = {
 		startDate: moment().subtract(1, 'months').format('YYYY-MM-DD'),
-		endDate: moment().format('YYYY-MM-DD')
+		endDate: moment().format('YYYY-MM-DD'),
+		step: 0
 	}
 
 	componentDidMount(){
@@ -20,6 +21,32 @@ class Stats extends Component{
 			[propertyName]: event.target.value
 		});
 	};//end dateRange
+
+	handleNext = () => {
+		if(this.state.step + 1 > 4){
+			this.setState({
+           		...this.state,
+            	step: 0
+        })} else {
+			this.setState({
+				...this.state,
+				step: this.state.step + 1
+			})
+		}
+    };//end handleNext
+
+    handleBack = () => {
+		if(this.state.step -1 < 0){
+			this.setState({
+           		...this.state,
+            	step: 4
+        })} else {
+			this.setState({
+				...this.state,
+				step: this.state.step - 1
+			})
+		}
+    }
 
 	ratingStats = () => {
 		let data = [];
@@ -34,6 +61,14 @@ class Stats extends Component{
 		event.preventDefault();
 		this.props.dispatch({type: 'STATS_DATE_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}})
 	};//end submitDates
+
+	charts = () => {
+		return [
+			<div className="chartDiv">
+
+			</div>
+		]
+	}
 	
 	render(){
 		// let today = new Date();
@@ -87,8 +122,25 @@ class Stats extends Component{
 						]
 					}]
 				}} />
-				<p>JSON</p>
-				<pre>{JSON.stringify(this.props.stats)}</pre>
+
+
+				{this.charts()[this.state.step]}
+				<MobileStepper
+					steps={5}
+					position="static"
+					variant="text"
+					activeStep={this.state.step}
+					nextButton={
+						<Button size="small" onClick={this.handleNext}>
+							NEXT
+                        </Button>
+					}
+					backButton={
+						<Button size="small" onClick={this.handleBack}>
+							BACK
+                        </Button>
+					}
+				/>
 			</div>
 		)
 	}
