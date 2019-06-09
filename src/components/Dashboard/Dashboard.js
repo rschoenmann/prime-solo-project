@@ -4,7 +4,7 @@ import {Button} from '@material-ui/core';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
-import DateRangePicker from '@wojtekmaj/react-daterange-picker'
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -68,10 +68,10 @@ class Dashboard extends Component {
 	};//end selectGradient
 
 	render() {
-		const customTooltipDataAttrs = (value) => ({ 'data-tip': value });
 		console.log('this.state dashboard', this.state)
 		let addDayButton;
 		let today = new Date();
+		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
 		for(let i=0; i<this.props.day.length; i++){
 			if (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10)){
@@ -89,7 +89,7 @@ class Dashboard extends Component {
 				
 				<p>Select date range to view:</p>
 				<DateRangePicker onChange={this.dateChange}
-					value={[new Date(), new Date()]} />
+					value={[monthAgo, today]} />
 
 				<label htmlFor="gradientSelect">
 					Select a gradient:
@@ -112,12 +112,12 @@ class Dashboard extends Component {
 					showWeekdayLabels={true}
 					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
 					onClick={this.handleDateClick}
-					transformDayElement={(rect, value, index) => {
+					transformDayElement={(rect, value, i) => {
 						const tooltip = (
 							<Tooltip id="tooltip">{value ? moment(value.date).format('MMM Do') : ''}</Tooltip>
 						);
 						return (
-							<OverlayTrigger placement="top" overlay={tooltip}>
+							<OverlayTrigger placement="top" overlay={tooltip} key={i}>
 								{rect}
 							</OverlayTrigger>
 						);

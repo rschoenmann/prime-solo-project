@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {LinkContainer} from "react-router-bootstrap";
 import {connect} from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import Nav from 'react-bootstrap/Nav';
