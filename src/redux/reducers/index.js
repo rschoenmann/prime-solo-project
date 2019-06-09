@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
   dates,
   gradient,
   single,
-  stats
+  stats,
 });
 
 export default rootReducer;

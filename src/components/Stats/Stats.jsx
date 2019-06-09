@@ -11,11 +11,24 @@ class Stats extends Component{
 		endDate: moment().format('YYYY-MM-DD')
 	}
 
+	componentDidMount(){
+		this.props.dispatch({type: 'STATS_DATE_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}})
+	}
+
 	dateRange = propertyName => (event) => {
 		this.setState({
 			[propertyName]: event.target.value
 		});
 	};//end dateRange
+
+	ratingStats = () => {
+		let data = [];
+			for(let i=0; i<this.props.stats.length; i++){
+				data.push(this.props.stats[i].count)
+			}
+		console.log('stats data:', data);
+		return data;
+	};//end ratingStats
 
 	submitDates = (event) => {
 		event.preventDefault();
@@ -47,37 +60,42 @@ class Stats extends Component{
 					<Button type="submit" variant="contained" color="primary" onClick={this.submitDates}>Fetch Data</Button>
 				</form>
 				    
-				<h2>Doughnut Example</h2>
+				<h3>Overall Day Ratings:</h3>
 				<Doughnut data={{
 					labels: [
-						'Red',
-						'Green',
-						'Yellow',
-						'Blue',
-						'Purple'
+						'1 Star',
+						'2 Star',
+						'3 Star',
+						'4 Star',
+						'5 Star'
 					],
 					datasets: [{
-						data: [300, 50, 100],
+						data: this.ratingStats(),
 						label: 'DONUTS',
 						backgroundColor: [
 							'#FF6384',
+							'#1AB71D',
+							'#FFCE56',
 							'#36A2EB',
-							'#FFCE56'
+							'#961EC2'
+							
 						],
 						hoverBackgroundColor: [
 							'#FF6384',
-							'#36A2EB',
+							'#1AB71D',
 							'#FFCE56'
 						]
 					}]
 				}} />
+				<p>JSON</p>
+				<pre>{JSON.stringify(this.props.stats)}</pre>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => ({
-	state
+	stats: state.stats
 });
 
 export default connect(mapStateToProps)(Stats);

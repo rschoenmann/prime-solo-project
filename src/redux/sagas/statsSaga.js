@@ -6,7 +6,7 @@ function* dateRange(action) {
 		console.log('stats date action.payload:', action.payload)
 		let query = `?startDate=${action.payload.startDate}&endDate=${action.payload.endDate}`;
 		const response = yield axios.get(`/api/stats/rating${query}`)
-		//yield put({type: 'SET_DATES', payload: response.data});
+		yield put({type: 'SET_RATING_STATS', payload: response.data});
 	} catch (error) {
 		console.log('Stats date range request failed', error)
 	}
