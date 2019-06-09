@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, TextField} from '@material-ui/core';
+import {Button, TextField, Select, MenuItem, FormControl} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
@@ -8,6 +9,14 @@ import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+
+
+const styles = {
+	menuProps: {
+			maxHeight: 48 * 4.5 + 8,
+			width: 200,
+	},
+};
 
 class Dashboard extends Component {
 
@@ -116,29 +125,20 @@ class Dashboard extends Component {
 					defaultValue={today}
 					InputLabelProps={{shrink: true,}}
 					onChange={this.dateChangeEnd('endDate')}/>
-{/* 
-				{this.props.gradient.map((aGradient) => {
-					if (aGradient.gradientid === this.state.gradient_id) {
-						return (
-							<>{aGradient.colors.map((color, i) => {
-									return (
-										<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
-									)
-								})}
-							</>
-						)
-					}
-				})} */}
 
+				<FormControl>
 				<label htmlFor="gradientSelect">
 					Select a gradient:
-				<select onChange={this.selectGradient}>
+				<Select onChange={this.selectGradient} className={this.props.classes.menuProps}
+						inputProps={{name: 'gradient',id: 'age-simple',}}>
+						<MenuItem value="" disabled><em>Placeholder</em></MenuItem>
 					{this.props.gradient.map((gradient) => {
 						return(
-							<option key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{background: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color})`}}>{gradient.name}</option>
+							<MenuItem key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color}`}}>{gradient.name}</MenuItem>
 						)
 					})}
-					</select></label>
+					</Select></label>
+				</FormControl>
 				
 				<CalendarHeatmap
 					horizontal={false}
@@ -176,4 +176,4 @@ const mapStateToProps = state => ({
 });
 
 // this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(Dashboard);
+export default withStyles(styles)(connect(mapStateToProps)(Dashboard));

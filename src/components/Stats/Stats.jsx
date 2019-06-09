@@ -156,6 +156,8 @@ class Stats extends Component{
 
 					<Button type="submit" variant="contained" color="primary" onClick={this.submitDates}>Fetch Data</Button>
 				</form>
+
+				<div style={{backgroundImage: "linear-gradient(to right, #ec2f4b, #009fff)"}}><p>GRADIENT BACKGROUND</p></div>
 				    
 				<h3>Overall Day Ratings:</h3>
 				<Pie data={{
