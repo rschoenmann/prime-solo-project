@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {HorizontalBar, Doughnut} from 'react-chartjs-2';
-import moment from 'moment';
+//import moment from 'moment';
 import {TextField} from '@material-ui/core';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
 class Stats extends Component{
 
-	dateRange = (event) => {
-		console.log('stats date range:', event.target.value)
+	dateRange = (value) => {
+		console.log('stats date range:', value)
+		this.props.dispatch({type: 'STATS_DATE_RANGE', payload: value})
 	};//end dateRange
 	
 	render(){
-		let today = new Date();
-		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
+		// let today = new Date();
+		// let monthAgo = today.setDate(today.getDate()-30);
 		return(
 			<div>
 				<h2>Stats</h2>
 				<p>Select date range:</p>
 				<DateRangePicker onChange={this.dateRange}
-					value={[monthAgo, today]} />
+					value={[new Date(), new Date()]} />
 				    
 				<h2>Doughnut Example</h2>
 				<Doughnut data={{
