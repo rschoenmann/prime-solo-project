@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import {FormControl, InputLabel, Select, MenuItem, OutlinedInput} from '@material-ui/core';
+import {FormControl, InputLabel, Select, MenuItem, OutlinedInput} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
 
+const styles = {
+  menuProps: {
+    maxHeight: 48 * 4.5 + 8,
+    width: 200,
+  },
+};
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -38,11 +45,11 @@ class RegisterPage extends Component {
     });
   }
 
-  divClick = (id) => {
-    console.log('register div click', id);
-    this.setState({
-      gradient_id: id
-    })
+  selectGradient = (event) => {
+    console.log('register div click', event.target.value);
+    // this.setState({
+    //   gradient_id: id
+    // })
   }
 
   render() {
@@ -81,21 +88,18 @@ class RegisterPage extends Component {
             </label>
           </div>
           <div>
-            <p>Select default color gradient: {this.state.gradient_id}</p>
-            {this.props.gradient.map((aGradient) => {
-              let id = `${aGradient.gradientid}`
-              return (
-                <div key={aGradient.gradientid} className="selectGradient"
-                  value={this.state.gradient_id} onClick={() => this.divClick(id)}>
-                  <p>{aGradient.name}:</p>
-                  {aGradient.colors.map((color, i) => {
-                    return (
-                      <div key={i} className="gradientDiv" style={{ backgroundColor: `${color.color}` }}></div>
-                    )
-                  })}
-                </div>
-              )
-            })}
+
+            <label htmlFor="gradientSelect">
+              Select Default Gradient:
+							<Select onChange={this.selectGradient} className={this.props.classes.menuProps} 
+              inputProps={{name: 'gradient', id: 'age-simple',}} value={this.state.gradient_id}>
+                {this.props.gradient.map((gradient) => {
+                  return (
+                    <MenuItem key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{ color: 'white', backgroundImage: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color}` }}>{gradient.name}</MenuItem>
+                  )
+                })}
+              </Select></label>
+          
           </div>
           <div>
             <input
@@ -128,5 +132,5 @@ const mapStateToProps = state => ({
   gradient: state.gradient,
 });
 
-export default connect(mapStateToProps)(RegisterPage);
+export default withStyles(styles)(connect(mapStateToProps)(RegisterPage));
 

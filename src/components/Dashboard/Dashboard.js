@@ -130,7 +130,7 @@ class Dashboard extends Component {
 				<label htmlFor="gradientSelect">
 					Select a gradient:
 				<Select onChange={this.selectGradient} className={this.props.classes.menuProps}
-						inputProps={{name: 'gradient',id: 'age-simple',}}>
+						inputProps={{name: 'gradient',id: 'age-simple',}} value={this.state.gradient_id}>
 						<MenuItem value="" disabled><em>Placeholder</em></MenuItem>
 					{this.props.gradient.map((gradient) => {
 						return(

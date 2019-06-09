@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {AppBar, Tab, Tabs} from '@material-ui/core';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import Nav from 'react-bootstrap/Nav';
 import './Nav.css';
@@ -10,33 +11,28 @@ const NavBar = (props) => (
     <Link to="/home">
       <h2 className="nav-title">Reflexive Reflection</h2>
     </Link>
-    <div className="nav-right">
-      <Link className="nav-link" to="/home">
-        {/* Show this link if they are logged in or not,
-        but call this link 'Dashboard' if they are logged in,
-        and call this link 'Login / Register' if they are not */}
-        {props.user.id ? 'Dashboard' : 'Login / Register'}
-      </Link>
-      {/* Show the link to the info page, AddDay, Profile and the logout button if the user is logged in */}
-      {props.user.id && (
-        <>
-          <Link className="nav-link" to="/addDay">
-            Add Day </Link>
-          <Link className="nav-link" to="/profile">
-            Profile </Link>
-          <Link className="nav-link" to="/stats">
-            Stats </Link>
-          {/* <Link className="nav-link" to="/info">
-            Info Page
-          </Link> */}
-          <LogOutButton className="nav-link"/>
-        </>
-      )}
-      {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
-        About
-      </Link>
-    </div>
+    <AppBar position="static" color="default">
+      <Tabs className="navRoot"
+        indicatorColor="primary"
+        centered
+        textColor="primary"
+        variant="fullWidth">
+        {/* Show this link if they are logged in or not but call it 'Dashboard' 
+        if they are logged in or 'Login / Register' if they are not */}
+        <Tab label={props.user.id ? 'Dashboard' : 'Login / Register'} component={Link} to="/home" className="navLink"/>
+        {/* Show the link to the info page, AddDay, Profile and the logout button if the user is logged in */}
+        {props.user.id && (
+          <>
+            <Tab label="Profile" component={Link} to="/profile" className="navLink"/>
+            <Tab label="Stats" component={Link} to="/stats" className="navLink"/>
+            <LogOutButton className="nav-link" />
+          </>
+        )}
+            <Tab label="About" component={Link} to="/about" className="navLink"/>
+        
+      </Tabs>
+    </AppBar>
+
   </div>
 );
 

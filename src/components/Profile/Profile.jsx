@@ -1,8 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button} from '@material-ui/core';
+import {Button, FormControl, Select, MenuItem} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
 import './Profile.css';
+
+const styles = {
+	menuProps: {
+		maxHeight: 48 * 4.5 + 8,
+		width: 200,
+	},
+	gradientDiv: {
+		width: '100px',
+		height: '50px',
+		border: '2px solid black',
+		display: 'inlineBlock',
+	}
+};
 
 class Profile extends Component {
 
@@ -30,10 +44,10 @@ class Profile extends Component {
 		})
 	};//end editProfile
 
-	divClick = (id) => {
-		console.log('div click!', id)
+	selectGradient = (event) => {
+		console.log('div click!', event.target.value)
 		this.setState({
-			gradient_id: id
+			gradient_id: event.target.value
 		})
 	}
 
@@ -77,30 +91,21 @@ class Profile extends Component {
 		                					onChange={this.handleInputChange('username')}/></label>
 										<br></br>
 
-										<label htmlFor="gradient_id">
-											Default color gradient: {aGradient.name} -  
-												{aGradient.colors.map((color, i) => {
+										<label htmlFor="gradientSelect">
+											Default Gradient:
+										<Select onChange={this.selectGradient} className={this.props.classes.menuProps}
+													inputProps={{name: 'gradient', id: 'age-simple', }} value={this.state.gradient_id} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${aGradient.colors[0].color}, ${aGradient.colors[4].color}`}}>
+											<MenuItem value={this.state.gradient_id} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${aGradient.colors[0].color}, ${aGradient.colors[4].color}`}}>Current: {aGradient.name}</MenuItem>
+												{this.props.gradient.map((gradient) => {
 													return (
-														<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
+														<MenuItem key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color}`}}>{gradient.name}</MenuItem>
 													)
-												})}</label>
+												})}
+											</Select></label>
 										<br></br><br></br>
 
-										<p>Select new color gradient:</p>
-											{this.props.gradient.map((aGradient) => {
-												let id = `${aGradient.gradientid}`
-												return(
-													<div key={aGradient.gradientid} className="selectGradient" 
-														value={this.state.gradient_id} onClick={() => this.divClick(id)}>
-														<p>{aGradient.name}:</p>
-														{aGradient.colors.map((color, i) => {
-															return(
-																<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
-															)
-														})}
-													</div>
-												)
-											})}
+
+									
 											<br></br>
 
 									<Button variant="contained" color="primary" onClick={this.cancelEdit}>Cancel</Button>
@@ -119,19 +124,13 @@ class Profile extends Component {
 										<div key={aGradient.gradientid}>
 											<p>Username: {this.props.user.username}</p>
 											<p>Default Color Gradient: {aGradient.name}</p>
-										{aGradient.colors.map((color, i) => {
-											return(
-												<div key={i} className="gradientDiv" style={{backgroundColor: `${color.color}`}}></div>
-											)
-										})}
+											<div className={this.props.classes.gradientDiv} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${aGradient.colors[0].color}, ${aGradient.colors[4].color}`}}></div>
 										</div>
 									)
 								}
 							})}
 							<br></br>
 							<Button variant="contained" color="primary" onClick={this.editProfile}>Edit Profile</Button>
-
-						<pre>{JSON.stringify(this.props.user)}</pre>
 						</>	
 					}
 			</div>
@@ -144,4 +143,4 @@ const mapStateToProps = state => ({
 	gradient: state.gradient
 });
 
-export default connect(mapStateToProps)(Profile);
+export default withStyles(styles)(connect(mapStateToProps)(Profile));
