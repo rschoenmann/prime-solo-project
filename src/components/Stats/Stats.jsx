@@ -75,43 +75,66 @@ class Stats extends Component{
 
 	charts = () => {
 		return [
-			<div className="chartDiv">
-				<p>ONE</p>
+			<div className="statsDiv">
+				<p>How often did you get enough sleep?</p>
 				<Doughnut data={{
-					labels: [
-						'Yes',
-						'No',
-					],
+					labels: ['Yes','No'],
 					datasets: [{
-						data: this.promptStats(),
+						data: ((this.props.statsPrompt.length) ? [this.props.statsPrompt[0].truecount, this.props.statsPrompt[0].falsecount] : ''),
 						label: 'Prompt',
-						backgroundColor: [
-							'#FF6384',
-							'#1AB71D']
-					}] }} />
+						backgroundColor: ['#1AB71D','#FF6384']}]}} />
 			</div>,
-
-			<div className="chartDiv">
-				<p>TWO</p>
+			<div className="statsDiv">
+				<p>How often did you drink enough water?</p>
+				<Doughnut data={{
+					labels: ['Yes', 'No'],
+					datasets: [{
+						data: ((this.props.statsPrompt.length) ? [this.props.statsPrompt[1].truecount, this.props.statsPrompt[1].falsecount] : ''),
+						label: 'Prompt',
+						backgroundColor: ['#1AB71D', '#FF6384']
+					}]
+				}} />
 			</div>,
-
-			<div className="chartDiv">
-				<p>THREE</p>
+			<div className="statsDiv">
+				<p>How often did you go outside?</p>
+				<Doughnut data={{
+					labels: ['Yes', 'No'],
+					datasets: [{
+						data: ((this.props.statsPrompt.length) ? [this.props.statsPrompt[2].truecount, this.props.statsPrompt[2].falsecount] : ''),
+						label: 'Prompt',
+						backgroundColor: ['#1AB71D', '#FF6384']
+					}]
+				}} />
 			</div>,
-
-			<div className="chartDiv">
-				<p>FOUR</p>
+			<div className="statsDiv">
+				<p>How often did you take your meds?</p>
+				<Doughnut data={{
+					labels: ['Yes', 'No'],
+					datasets: [{
+						data: ((this.props.statsPrompt.length) ? [this.props.statsPrompt[3].truecount, this.props.statsPrompt[3].falsecount] : ''),
+						label: 'Prompt',
+						backgroundColor: ['#1AB71D', '#FF6384']
+					}]
+				}} />
 			</div>,
-
-			<div className="chartDiv">
-				<p>FIVE</p>
-			</div>,
+			<div className="statsDiv">
+				<p>How often did you talk to a friend?</p>
+				<Doughnut data={{
+					labels: ['Yes', 'No'],
+					datasets: [{
+						data: ((this.props.statsPrompt.length) ? [this.props.statsPrompt[4].truecount, this.props.statsPrompt[4].falsecount] : ''),
+						label: 'Prompt',
+						backgroundColor: ['#1AB71D', '#FF6384']
+					}]
+				}} />
+			</div>
 		]
 	}
 	
 	render(){
 		// let today = new Date();
 		// let monthAgo = today.setDate(today.getDate()-30);
+		console.log('prompt stats', this.charts())
 		return(
 			<div>
 				<h2>Stats</h2>
@@ -162,7 +185,7 @@ class Stats extends Component{
 					}]
 				}} />
 
-
+				
 				{this.charts()[this.state.step]}
 				<MobileStepper
 					steps={5}

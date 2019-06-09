@@ -25,12 +25,12 @@ router.get('/prompts', rejectUnauthenticated, (req, res) => {
 	let startDate = req.query.startDate;
 	let endDate = req.query.endDate;
 	let queryText = `SELECT count(*) FILTER (WHERE "answer") as truecount,
-		count(*) FILTER (WHERE NOT "answer") as falsecount, "prompt".prompt FROM "prompt_review"
-		JOIN "review" ON "prompt_review".review_id = "review"."id"
-		JOIN "prompt" ON "prompt_review".prompt_id = "prompt"."id"
-		WHERE "review"."date" BETWEEN $1 AND $2
-		AND "review".user_id = $3
-		GROUP BY "prompt"."prompt";`;
+	count(*) FILTER (WHERE NOT "answer") as falsecount, "prompt".prompt, "prompt".id FROM "prompt_review"
+	JOIN "review" ON "prompt_review".review_id = "review"."id"
+	JOIN "prompt" ON "prompt_review".prompt_id = "prompt"."id"
+	WHERE "review"."date" BETWEEN $1 AND $2
+	AND "review".user_id = $3
+	GROUP BY "prompt"."id" ORDER BY "prompt".id;`;
 	pool.query(queryText, [startDate, endDate, req.user.id])
 		.then((result) => {
 			console.log('stats rating GET:', result.rows);
