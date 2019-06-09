@@ -156,8 +156,6 @@ class Stats extends Component{
 
 					<Button type="submit" variant="contained" color="primary" onClick={this.submitDates}>Fetch Data</Button>
 				</form>
-
-				<div style={{backgroundImage: "linear-gradient(to right, #ec2f4b, #009fff)"}}><p>GRADIENT BACKGROUND</p></div>
 				    
 				<h3>Overall Day Ratings:</h3>
 				<Pie data={{
@@ -172,17 +170,19 @@ class Stats extends Component{
 						data: this.ratingStats(),
 						label: 'DONUTS',
 						backgroundColor: [
-							'#FF6384',
-							'#1AB71D',
-							'#FFCE56',
-							'#36A2EB',
-							'#961EC2'
+							'#0f1f8a',
+							'#254a8f',
+							'#3984b3',
+							'#59b9cf',
+							'#b8decc'
 							
 						],
 						hoverBackgroundColor: [
-							'#FF6384',
-							'#1AB71D',
-							'#FFCE56'
+							'#242e6e',
+							'#33589c',
+							'#4a94c2',
+							'#68c8de',
+							'#c5ebd8'
 						]
 					}]
 				}} />
