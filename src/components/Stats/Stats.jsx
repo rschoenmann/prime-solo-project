@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {HorizontalBar, Doughnut} from 'react-chartjs-2';
+import {Pie, Doughnut} from 'react-chartjs-2';
 import moment from 'moment';
 import {TextField, Button, MobileStepper, Paper, Typography, SwipeableViews} from '@material-ui/core';
 
@@ -14,6 +14,7 @@ class Stats extends Component{
 
 	componentDidMount(){
 		this.props.dispatch({type: 'STATS_DATE_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}})
+		this.props.dispatch({type: 'STATS_PROMPT_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}})
 	}
 
 	dateRange = propertyName => (event) => {
@@ -48,6 +49,15 @@ class Stats extends Component{
 		}
     }
 
+	promptStats = () => {
+		let data = [];
+		for (let i = 0; i < this.props.statsPrompt.length; i++) {
+			data.push(this.props.statsPrompt[i].truecount, this.props.statsPrompt[i].falsecount)
+		}
+		console.log('stats data:', data);
+		return data;
+	};//end promptStats
+
 	ratingStats = () => {
 		let data = [];
 			for(let i=0; i<this.props.stats.length; i++){
@@ -59,13 +69,26 @@ class Stats extends Component{
 
 	submitDates = (event) => {
 		event.preventDefault();
-		this.props.dispatch({type: 'STATS_DATE_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}})
+		this.props.dispatch({type: 'STATS_DATE_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}});
+		this.props.dispatch({type: 'STATS_PROMPT_RANGE', payload: {startDate: this.state.startDate, endDate:this.state.endDate}})
 	};//end submitDates
 
 	charts = () => {
 		return [
 			<div className="chartDiv">
 				<p>ONE</p>
+				<Doughnut data={{
+					labels: [
+						'Yes',
+						'No',
+					],
+					datasets: [{
+						data: this.promptStats(),
+						label: 'Prompt',
+						backgroundColor: [
+							'#FF6384',
+							'#1AB71D']
+					}] }} />
 			</div>,
 
 			<div className="chartDiv">
@@ -112,7 +135,7 @@ class Stats extends Component{
 				</form>
 				    
 				<h3>Overall Day Ratings:</h3>
-				<Doughnut data={{
+				<Pie data={{
 					labels: [
 						'1 Star',
 						'2 Star',
@@ -163,7 +186,8 @@ class Stats extends Component{
 }
 
 const mapStateToProps = state => ({
-	stats: state.stats
+	stats: state.stats,
+	statsPrompt: state.statsPrompt
 });
 
 export default connect(mapStateToProps)(Stats);

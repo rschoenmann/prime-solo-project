@@ -12,8 +12,20 @@ function* dateRange(action) {
 	}
 }
 
+function* promptRange(action) {
+	try {
+		console.log('stats prompt action.payload:', action.payload)
+		let query = `?startDate=${action.payload.startDate}&endDate=${action.payload.endDate}`;
+		const response = yield axios.get(`/api/stats/prompts${query}`)
+		yield put({type: 'SET_PROMPT_STATS', payload: response.data});
+	} catch (error) {
+		console.log('Stats date range request failed', error)
+	}
+}
+
 function* statsSaga() {
 	yield takeLatest('STATS_DATE_RANGE', dateRange);
+	yield takeLatest('STATS_PROMPT_RANGE', promptRange);
 }
 
 export default statsSaga;

@@ -9,6 +9,7 @@ import dates from './datesReducer';
 import gradient from './gradientReducer';
 import single from './singleDayReducer';
 import stats from './statsReducer';
+import statsPrompt from './statsPromptReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   gradient,
   single,
   stats,
+  statsPrompt
 });
 
 export default rootReducer;
