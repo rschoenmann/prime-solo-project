@@ -34,10 +34,10 @@ router.get('/dates', rejectUnauthenticated, (req, res) => {
 		GROUP BY "review".id ORDER BY "review".date ASC;`;
 	pool.query(queryText, [startDate, endDate, req.user.id])
 		.then((result) => {
-			console.log('day/dates get results:', result.rows);
+			console.log('LOOK HERE day/dates get results:', result.rows);
 			res.send(result.rows)
 		}).catch((error) => {
-			console.log('error in day/dates GET:', error)
+			console.log('ERROR error in day/dates GET:', error)
 		});
 });//end /dates GET
 

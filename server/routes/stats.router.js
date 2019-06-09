@@ -10,7 +10,7 @@ router.get('/rating', rejectUnauthenticated, (req, res) => {
 	let queryText = `SELECT "rating", count(*) FROM "review"
 		WHERE "date" BETWEEN $1 AND $2
 		AND "user_id" = $3
-		GROUP BY "rating";`;
+		GROUP BY "rating" ORDER BY "rating";`;
 	pool.query(queryText, [startDate, endDate, req.user.id])
 		.then((result) => {
 			console.log('stats rating GET:', result.rows);
