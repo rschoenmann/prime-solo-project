@@ -132,7 +132,7 @@ class Dashboard extends Component {
 			
 			<Grid className={classes.root}>
 			<div>
-				<Typography variant="h5" className={classes.head}>Dashboard!</Typography>
+				<Typography variant="h5" className={classes.head}>Welcome, {this.props.user.username}!</Typography>
 				
 				{addDayButton}
 				<br></br><br></br>
