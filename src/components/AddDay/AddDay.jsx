@@ -22,6 +22,12 @@ const styles = {
 		width: '75%',
 		padding: '20px',
 	},
+	paper: {
+		padding: '15px',
+		width: '50%',
+		height: '150px',
+		marginTop: '20px',
+	},
 
 };
 
@@ -86,15 +92,15 @@ class AddDay extends Component {
 
 						<br></br><br></br>
 
-						<p>Any notes to add?:</p>
-						<TextField
-							onChange={this.handleNotes}
-							id="standard-multiline-static"
-							multiline rowsMax="3"
-							placeholder="(optional)"
-							margin="normal" />
+						<Paper className={classes.paper}>Any notes to add?: <TextField
+										onChange={this.handleNotes}
+										id="standard-multiline-static"
+										multiline rowsMax="3"
+										placeholder="(optional)"
+										margin="normal" />
+						</Paper>
+						<br></br>
 
-								<br></br>
 					</CardContent>
 					<CardActions>
 						<Button variant="contained" color="primary" onClick={this.handleSubmit}>

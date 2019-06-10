@@ -35,10 +35,14 @@ const styles = {
 		maxHeight: 48 * 4.5 + 8,
 		width: 200,
 		marginLeft: '5px',
+		paddingLeft: '10px',
 	},
 	selects: {
 		marginTop: '20px',
 
+	},
+	datePicker: {
+		paddingLeft: '8px',
 	},
 	selectTypo: {
 		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
@@ -143,14 +147,14 @@ class Dashboard extends Component {
 				<br></br><br></br>
 				
 				<p className={classes.selectTypo}>Select date range to view:</p>
-				<TextField 
+				<TextField className={classes.datePicker}
 					id="startDate"
 					type="date"
 					defaultValue={monthAgo}
 					InputLabelProps={{shrink: true,}} 
 					onChange={this.dateChange('startDate')}/>
 
-				<TextField 
+				<TextField className={classes.datePicker} 
 					id="endDate"
 					type="date"
 					defaultValue={today}
