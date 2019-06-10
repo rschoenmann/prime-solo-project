@@ -4,9 +4,7 @@ import {Card, CardContent, CardActions, Checkbox, TextField, Paper, Button, Grid
 import StarRating from '../StarRating/StarRating';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
-import {withStyles, useTheme} from '@material-ui/core/styles';
-import {createMuiTheme} from '@material-ui/core/styles';
-
+import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
 	root: {
@@ -65,7 +63,7 @@ class AddDay extends Component {
 
 	render(){
 		const {classes} = this.props;
-		let today = <Moment local format="MM/DD/YYYY"></Moment>;
+		let today = <Moment local format="MMMM Do YYYY"></Moment>;
 		return(
 				<Grid>
 				<Card className={classes.card}>
