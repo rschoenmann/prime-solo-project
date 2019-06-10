@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, TextField, Select, MenuItem, FormControl, Card, Grid, Typography} from '@material-ui/core';
+import {Button, TextField, Select, MenuItem, FormControl, InputLabel, FormControlLabel, Grid, Typography} from '@material-ui/core';
 import {withStyles, ThemeProvider} from '@material-ui/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
@@ -20,21 +20,30 @@ const theme = createMuiTheme({
 
 const styles = {
 	root: {
-		
+		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+		margin: '20px',
 	},
 	head: {
-		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
 		marginTop: '20px',
+		marginBottom: '20px',
 	},
-	submitButton: {
-		marginLeft: '40%',
-		marginBottom: '25px',
-		marginTop: '25px'
+
+	addDay: {
+	
 	},
 	menuProps: {
 		maxHeight: 48 * 4.5 + 8,
 		width: 200,
+		marginLeft: '5px',
 	},
+	selects: {
+		marginTop: '20px',
+
+	},
+	selectTypo: {
+		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+	},
+
 };
 
 class Dashboard extends Component {
@@ -117,31 +126,31 @@ class Dashboard extends Component {
 			let todayDate = new Date();
 			let todayStringed = todayDate.toISOString().substr(0, 10);
 			if (dateStringed === todayStringed){
-				addDayButton = <Button variant="contained" >Rate Today</Button>
+				addDayButton = <Button variant="contained" className={classes.addDay}>Rate Today</Button>
 			} else {
-				addDayButton = <Button variant="contained" color="primary" onClick={this.handleAdd}>Rate Today</Button>
+				addDayButton = <Button variant="contained" color="primary" onClick={this.handleAdd} className={classes.addDay}>Rate Today</Button>
 			}
 		}
 
 		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
 			<ThemeProvider theme={theme}>
-				<Grid container spacing={2} justify="center" className={classes.root}>
+			<Grid>
 			<div>
 				<Typography variant="h5" className={classes.head}>Dashboard!</Typography>
 				
 				{addDayButton}
 				<br></br><br></br>
 				
-				<p>Select date range to view:</p>
-				<TextField
+				<p className={classes.selectTypo}>Select date range to view:</p>
+				<TextField 
 					id="startDate"
 					type="date"
 					defaultValue={monthAgo}
 					InputLabelProps={{shrink: true,}} 
 					onChange={this.dateChange('startDate')}/>
 
-				<TextField
+				<TextField 
 					id="endDate"
 					type="date"
 					defaultValue={today}
@@ -149,17 +158,15 @@ class Dashboard extends Component {
 					onChange={this.dateChangeEnd('endDate')}/>
 
 				<FormControl>
-				<label htmlFor="gradientSelect">
-					Select a gradient:
-				<Select onChange={this.selectGradient} className={this.props.classes.menuProps}
+					<FormControlLabel label="Select a gradient:" labelPlacement="start" control={
+					<Select onChange={this.selectGradient} className={this.props.classes.menuProps}
 						inputProps={{name: 'gradient',id: 'age-simple',}} value={this.state.gradient_id}>
-						<MenuItem value="" disabled><em>Placeholder</em></MenuItem>
 					{this.props.gradient.map((gradient) => {
 						return(
 							<MenuItem key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color}`}}>{gradient.name}</MenuItem>
 						)
 					})}
-					</Select></label>
+					</Select>}/>
 				</FormControl>
 				
 				<CalendarHeatmap
@@ -186,7 +193,7 @@ class Dashboard extends Component {
 					<ReactTooltip/>
       			
 			</div>
-				</Grid>
+			</Grid>
 			</ThemeProvider>
 		)
 	}
