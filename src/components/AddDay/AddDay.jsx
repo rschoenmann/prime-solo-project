@@ -1,19 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, CardContent, CardActions, Checkbox, TextField, Paper, Button, Grid} from '@material-ui/core';
+import {Card, CardContent, CardActions, Checkbox, TextField, Paper, Button, Grid, Typography} from '@material-ui/core';
 import StarRating from '../StarRating/StarRating';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
 import {withStyles, useTheme} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 
-
-const theme = createMuiTheme({
-	palette: {
-		primary: {main: '#2980b9'},
-		secondary: {main: '#29b9ab'}
-	}
-})
 
 const styles = {
 	root: {
@@ -22,25 +15,14 @@ const styles = {
 		
 	},
 	head: {
-		marginTop: '20px',
-		marginBottom: '20px',
+		marginTop: '25px',
+		marginBottom: '30px',
 	},
-
-	addDay: {
-	
-	},
-	menuProps: {
-		maxHeight: 48 * 4.5 + 8,
-		width: 200,
-		marginLeft: '5px',
-	},
-	paper: {
-		marginTop: '20px',
-		width: '350px',
-		height: '200px',
-	},
-	selectTypo: {
-		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+	card: {
+		margin: 'auto',
+		marginTop: '30px',
+		width: '75%',
+		padding: '20px',
 	},
 
 };
@@ -86,9 +68,9 @@ class AddDay extends Component {
 		let today = <Moment local format="MM/DD/YYYY"></Moment>;
 		return(
 				<Grid>
-				<Card>
+				<Card className={classes.card}>
 					<CardContent>
-						Entering Data For: {today}
+						<Typography className={classes.head} variant="h5">Entering Data For: {today}</Typography>
 						{this.props.prompt.map((prompt) => {
 							// isChecked = prompt.id;
 							const id = prompt.id
@@ -106,14 +88,14 @@ class AddDay extends Component {
 
 						<br></br><br></br>
 
-						<Paper className={classes.paper}>
-							<TextField
-								onChange={this.handleNotes}
-								id="standard-multiline-static"
-								label="Any notes to add? (optional)"
-								multiline rowsMax="3"
-								placeholder="notes"
-								margin="normal" /></Paper>
+						<p>Any notes to add?:</p>
+						<TextField
+							onChange={this.handleNotes}
+							id="standard-multiline-static"
+							multiline rowsMax="3"
+							placeholder="(optional)"
+							margin="normal" />
+
 								<br></br>
 					</CardContent>
 					<CardActions>
