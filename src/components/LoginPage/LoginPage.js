@@ -1,22 +1,24 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {withStyles, ThemeProvider} from '@material-ui/styles';
-import {createMuiTheme} from '@material-ui/core/styles';
-import {Grid, Typography} from '@material-ui/core';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {main: '#4caf50'},
-    secondary: {main: '#81d4fa'}
-  }
-})
+import {withStyles} from '@material-ui/styles';
+import {Grid, Typography, Button} from '@material-ui/core';
 
 const styles = {
-  root: {
+	root: {
     justify: 'center',
-  },
+		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+		marginLeft: '25px',
+	},
+	head: {
+		marginTop: '20px',
+		marginBottom: '20px',
+	},
+	login: {
+		marginTop: '20px',
+    marginBottom: '15px',
 
-}
+	},
+};
 class LoginPage extends Component {
   state = {
     username: '',
@@ -48,7 +50,7 @@ class LoginPage extends Component {
   render() {
     const {classes} = this.props;
     return (
-      <>
+      <Grid className={classes.root}>
       <div>
         {this.props.errors.loginMessage && (
           <h2
@@ -59,7 +61,7 @@ class LoginPage extends Component {
           </h2>
         )}
         <form onSubmit={this.login} className="registerForm">
-          <h2>Login</h2>
+          <Typography variant="h5" className={classes.head}>Login</Typography>
           <div>
             <label htmlFor="username">
               Username:
@@ -83,12 +85,7 @@ class LoginPage extends Component {
             </label>
           </div>
           <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
-            />
+            <Button type="submit" variant="contained" color="primary" value="Log In" className={classes.login}>Log In</Button>
           </div>
         </form>
         
@@ -101,7 +98,7 @@ class LoginPage extends Component {
           </button>
         
       </div>
-      </>
+      </Grid>
     );
   }
 }
@@ -113,4 +110,4 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps)(LoginPage);
+export default withStyles(styles)(connect(mapStateToProps)(LoginPage));

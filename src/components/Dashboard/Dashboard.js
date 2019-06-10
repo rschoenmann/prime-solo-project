@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button, TextField, Select, MenuItem, FormControl, InputLabel, FormControlLabel, Grid, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/styles';
-import {createMuiTheme} from '@material-ui/core/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
@@ -10,13 +9,6 @@ import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-
-const theme = createMuiTheme({
-	palette: {
-		primary: {main: '#2980b9'},
-		secondary: {main: '#29b9ab'}
-	}
-})
 
 const styles = {
 	root: {
