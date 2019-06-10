@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {FormControl, InputLabel, Select, MenuItem, OutlinedInput} from '@material-ui/core';
+import {Select, MenuItem, Button} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
@@ -46,10 +46,10 @@ class RegisterPage extends Component {
   }
 
   selectGradient = (event) => {
-    console.log('register div click', event.target.value);
-    // this.setState({
-    //   gradient_id: id
-    // })
+    console.log('register gradient select', event.target.value);
+    this.setState({
+      gradient_id: event.target.value
+    })
   }
 
   render() {
@@ -110,6 +110,8 @@ class RegisterPage extends Component {
             />
           </div>
         </form>
+
+        {/* <Button variant="contained" color="primary" onClick={() => {this.props.dispatch({type: 'SET_TO_LOGIN_MODE'})}}>Login</Button> */}
         
           <button
             type="button"

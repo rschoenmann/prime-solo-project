@@ -1,9 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {AppBar, Tab, Tabs} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { AppBar, Tab, Tabs } from '@material-ui/core';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import Nav from 'react-bootstrap/Nav';
 import './Nav.css';
 
 const NavBar = (props) => (
@@ -19,17 +18,17 @@ const NavBar = (props) => (
         variant="fullWidth">
         {/* Show this link if they are logged in or not but call it 'Dashboard' 
         if they are logged in or 'Login / Register' if they are not */}
-        <Tab label={props.user.id ? 'Dashboard' : 'Login / Register'} component={Link} to="/home" className="navLink"/>
+        <Tab label={props.user.id ? 'Dashboard' : 'Login / Register'} component={Link} to="/home" className="navLink" />
         {/* Show the link to the info page, AddDay, Profile and the logout button if the user is logged in */}
         {props.user.id && (
           <>
-            <Tab label="Profile" component={Link} to="/profile" className="navLink"/>
-            <Tab label="Stats" component={Link} to="/stats" className="navLink"/>
+            <Tab label="Profile" component={Link} to="/profile" className="navLink" />
+            <Tab label="Stats" component={Link} to="/stats" className="navLink" />
             <LogOutButton className="nav-link" />
           </>
         )}
-            <Tab label="About" component={Link} to="/about" className="navLink"/>
-        
+        <Tab label="About" component={Link} to="/about" className="navLink" />
+
       </Tabs>
     </AppBar>
 

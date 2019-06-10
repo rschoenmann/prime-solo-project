@@ -63,6 +63,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ProtectedRoute)
+export default connect(mapStateToProps)(ProtectedRoute);
 
 
