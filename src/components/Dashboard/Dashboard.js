@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, TextField, Select, MenuItem, FormControl} from '@material-ui/core';
+import {Button, TextField, Select, MenuItem, FormControl, Card, Grid, Typography} from '@material-ui/core';
 import {withStyles, ThemeProvider} from '@material-ui/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
@@ -13,15 +13,18 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 const theme = createMuiTheme({
 	palette: {
-		primary: { main: '#4caf50' },
-		secondary: { main: '#81d4fa' }
+		primary: {main: '#2980b9'},
+		secondary: {main: '#2c3e50'}
 	}
 })
 
 const styles = {
 	root: {
-		backgroundColor: '#424242',
-		paddingBottom: '75px'
+		
+	},
+	head: {
+		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+		marginTop: '20px',
 	},
 	submitButton: {
 		marginLeft: '40%',
@@ -125,7 +128,7 @@ class Dashboard extends Component {
 			<ThemeProvider theme={theme}>
 				<Grid container spacing={2} justify="center" className={classes.root}>
 			<div>
-				<h2>Dashboard!</h2>
+				<Typography variant="h5" className={classes.head}>Dashboard!</Typography>
 				
 				{addDayButton}
 				<br></br><br></br>
