@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button, TextField, Select, MenuItem, FormControl, InputLabel, FormControlLabel, Grid, Typography} from '@material-ui/core';
-import {withStyles, ThemeProvider} from '@material-ui/styles';
+import {withStyles} from '@material-ui/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
@@ -14,7 +14,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 const theme = createMuiTheme({
 	palette: {
 		primary: {main: '#2980b9'},
-		secondary: {main: '#2c3e50'}
+		secondary: {main: '#29b9ab'}
 	}
 })
 
@@ -134,7 +134,7 @@ class Dashboard extends Component {
 
 		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
-			<ThemeProvider theme={theme}>
+			
 			<Grid>
 			<div>
 				<Typography variant="h5" className={classes.head}>Dashboard!</Typography>
@@ -194,7 +194,6 @@ class Dashboard extends Component {
       			
 			</div>
 			</Grid>
-			</ThemeProvider>
 		)
 	}
 }

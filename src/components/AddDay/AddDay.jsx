@@ -1,18 +1,49 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, CardContent, CardActions, Checkbox, TextField, Paper, Button} from '@material-ui/core';
+import {Card, CardContent, CardActions, Checkbox, TextField, Paper, Button, Grid} from '@material-ui/core';
 import StarRating from '../StarRating/StarRating';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
-import {withStyles} from '@material-ui/core/styles';
+import {withStyles, useTheme} from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {main: '#2980b9'},
+		secondary: {main: '#29b9ab'}
+	}
+})
 
 const styles = {
 	root: {
+		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+		margin: '20px',
+		
+	},
+	head: {
+		marginTop: '20px',
+		marginBottom: '20px',
+	},
+
+	addDay: {
+	
+	},
+	menuProps: {
+		maxHeight: 48 * 4.5 + 8,
+		width: 200,
+		marginLeft: '5px',
+	},
+	paper: {
+		marginTop: '20px',
 		width: '350px',
 		height: '200px',
-	}
-}
+	},
+	selectTypo: {
+		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+	},
+
+};
 
 class AddDay extends Component {
 
@@ -51,9 +82,10 @@ class AddDay extends Component {
 	};//end handleSubmit
 
 	render(){
+		const {classes} = this.props;
 		let today = <Moment local format="MM/DD/YYYY"></Moment>;
 		return(
-			<>
+				<Grid>
 				<Card>
 					<CardContent>
 						Entering Data For: {today}
@@ -74,7 +106,7 @@ class AddDay extends Component {
 
 						<br></br><br></br>
 
-						<Paper className={this.props.classes.root}>
+						<Paper className={classes.paper}>
 							<TextField
 								onChange={this.handleNotes}
 								id="standard-multiline-static"
@@ -89,11 +121,8 @@ class AddDay extends Component {
 							Submit Day</Button>
 					</CardActions>
 				</Card>
+			</Grid>
 
-
-
-			
-			</>
 		)
 	}
 }

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 
 import {connect} from 'react-redux';
+import {ThemeProvider} from '@material-ui/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 
 import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
@@ -18,6 +20,13 @@ import Stats from '../Stats/Stats';
 
 import './App.css';
 
+const theme = createMuiTheme({
+	palette: {
+		primary: {main: '#2980b9'},
+		secondary: {main: '#29b9ab'}
+	}
+})
+
 class App extends Component {
   componentDidMount () {
     this.props.dispatch({type: 'FETCH_USER'})
@@ -25,6 +34,7 @@ class App extends Component {
 
   render() {
     return (
+      <ThemeProvider theme={theme}>
       <Router>
         <div>
           <NavBar />
@@ -70,6 +80,7 @@ class App extends Component {
           <Footer />
         </div>
       </Router>
+      </ThemeProvider>
   )}
 }
 
