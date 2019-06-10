@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button, TextField, Select, MenuItem, FormControl} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
+import {withStyles, ThemeProvider} from '@material-ui/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
@@ -10,11 +11,26 @@ import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
+const theme = createMuiTheme({
+	palette: {
+		primary: { main: '#4caf50' },
+		secondary: { main: '#81d4fa' }
+	}
+})
 
 const styles = {
+	root: {
+		backgroundColor: '#424242',
+		paddingBottom: '75px'
+	},
+	submitButton: {
+		marginLeft: '40%',
+		marginBottom: '25px',
+		marginTop: '25px'
+	},
 	menuProps: {
-			maxHeight: 48 * 4.5 + 8,
-			width: 200,
+		maxHeight: 48 * 4.5 + 8,
+		width: 200,
 	},
 };
 
@@ -84,6 +100,7 @@ class Dashboard extends Component {
 	};//end selectGradient
 
 	render() {
+		const {classes} = this.props;
 		console.log('this.state dashboard', this.state)
 		let addDayButton;
 		// let today = moment().format('YYYY-MM-DD');
@@ -105,6 +122,8 @@ class Dashboard extends Component {
 
 		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
+			<ThemeProvider theme={theme}>
+				<Grid container spacing={2} justify="center" className={classes.root}>
 			<div>
 				<h2>Dashboard!</h2>
 				
@@ -164,6 +183,8 @@ class Dashboard extends Component {
 					<ReactTooltip/>
       			
 			</div>
+				</Grid>
+			</ThemeProvider>
 		)
 	}
 }

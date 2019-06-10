@@ -1,14 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Select, MenuItem, Button} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
+import {Select, MenuItem, Button, Card, Grid, Typography, FormControl, TextField} from '@material-ui/core';
+import {withStyles, ThemeProvider} from '@material-ui/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#4caf50' },
+    secondary: { main: '#81d4fa' }
+  }
+})
 
 const styles = {
+  root: {
+    backgroundColor: '#424242',
+    paddingBottom: '75px'
+  },
+  submitButton: {
+    marginLeft: '40%',
+    marginBottom: '25px',
+    marginTop: '25px'
+  }, 
   menuProps: {
     maxHeight: 48 * 4.5 + 8,
     width: 200,
   },
-};
+}
+
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -53,6 +71,7 @@ class RegisterPage extends Component {
   }
 
   render() {
+    const {classes}=this.props;
     return (
       <div>
         {this.props.errors.registrationMessage && (
@@ -111,15 +130,15 @@ class RegisterPage extends Component {
           </div>
         </form>
 
-        {/* <Button variant="contained" color="primary" onClick={() => {this.props.dispatch({type: 'SET_TO_LOGIN_MODE'})}}>Login</Button> */}
+        <Button variant="contained" color="primary" onClick={() => {this.props.dispatch({type: 'SET_TO_LOGIN_MODE'})}}>Login</Button>
         
-          <button
+          {/* <button
             type="button"
             className="link-button"
             onClick={() => {this.props.dispatch({type: 'SET_TO_LOGIN_MODE'})}}
           >
             Login
-          </button>
+          </button> */}
         
       </div>
     );

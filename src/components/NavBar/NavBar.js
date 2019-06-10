@@ -16,6 +16,7 @@ const NavBar = (props) => (
         centered
         textColor="primary"
         variant="fullWidth">
+        
         {/* Show this link if they are logged in or not but call it 'Dashboard' 
         if they are logged in or 'Login / Register' if they are not */}
         <Tab label={props.user.id ? 'Dashboard' : 'Login / Register'} component={Link} to="/home" className="navLink" />
@@ -24,11 +25,11 @@ const NavBar = (props) => (
           <>
             <Tab label="Profile" component={Link} to="/profile" className="navLink" />
             <Tab label="Stats" component={Link} to="/stats" className="navLink" />
-            <LogOutButton className="nav-link" />
+            <LogOutButton className="navLink" />
           </>
         )}
         <Tab label="About" component={Link} to="/about" className="navLink" />
-
+        
       </Tabs>
     </AppBar>
 

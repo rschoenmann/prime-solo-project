@@ -1,6 +1,22 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {withStyles, ThemeProvider} from '@material-ui/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
+import {Grid, Typography} from '@material-ui/core';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {main: '#4caf50'},
+    secondary: {main: '#81d4fa'}
+  }
+})
+
+const styles = {
+  root: {
+    justify: 'center',
+  },
+
+}
 class LoginPage extends Component {
   state = {
     username: '',
@@ -30,7 +46,9 @@ class LoginPage extends Component {
   }
 
   render() {
+    const {classes} = this.props;
     return (
+      <>
       <div>
         {this.props.errors.loginMessage && (
           <h2
@@ -83,6 +101,7 @@ class LoginPage extends Component {
           </button>
         
       </div>
+      </>
     );
   }
 }
