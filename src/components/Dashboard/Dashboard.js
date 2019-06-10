@@ -21,13 +21,12 @@ const theme = createMuiTheme({
 const styles = {
 	root: {
 		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-		margin: '20px',
+		marginLeft: '25px',
 	},
 	head: {
 		marginTop: '20px',
 		marginBottom: '20px',
 	},
-
 	addDay: {
 	
 	},
@@ -139,7 +138,7 @@ class Dashboard extends Component {
 		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
 			
-			<Grid>
+			<Grid className={classes.root}>
 			<div>
 				<Typography variant="h5" className={classes.head}>Dashboard!</Typography>
 				
