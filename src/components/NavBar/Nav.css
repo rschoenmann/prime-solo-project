@@ -6,6 +6,10 @@
     padding-left: 10px;
 }
 
+body {
+  width: 900px,
+}
+
 .nav {
   overflow: hidden;
   /* background-color: #00acb0;  */
