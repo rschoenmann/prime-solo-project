@@ -173,6 +173,10 @@ class Dashboard extends Component {
 				</FormControl>
 				<br></br>
 
+				{/* div 
+				map gradient
+				return (starIcon with gradient colors) */}
+
 {/* 
 			<Rating initialRating={5} className={classes.star}
 				emptySymbol={<StarBorder className={classes.icon}/>}
