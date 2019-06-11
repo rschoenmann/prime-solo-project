@@ -215,19 +215,19 @@ class Stats extends Component{
 						data: this.ratingStats(),
 						label: 'DONUTS',
 						backgroundColor: [
-							'#0f1f8a',
-							'#254a8f',
-							'#3984b3',
-							'#59b9cf',
-							'#b8decc'
+							'red',
+							'orange',
+							'yellow',
+							'green',
+							'blue'
 							
 						],
 						hoverBackgroundColor: [
-							'#242e6e',
-							'#33589c',
-							'#4a94c2',
-							'#68c8de',
-							'#c5ebd8'
+							'red',
+							'orange',
+							'yellow',
+							'green',
+							'blue'
 						]
 					}]
 				}} />

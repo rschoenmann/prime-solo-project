@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 	let queryValue = req.user.id
 	pool.query(queryText, [queryValue])
 	.then((result) => {
-		console.log('day get results:', result.rows);
+		//console.log('day get results:', result.rows);
 		res.send(result.rows)
 	}).catch((error) => {
 		console.log('error in day GET:', error)
@@ -79,7 +79,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 });//end POST
 
 router.put('/', rejectUnauthenticated, (req, res) => {
-	console.log('req.body:', req.body)
+	//console.log('req.body:', req.body)
 	let queryText = `UPDATE "review"
 		SET "notes" = $1
 		WHERE "id" = $2 AND "user_id" = $3;`;
