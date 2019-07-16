@@ -1,11 +1,13 @@
+
+
 .react-calendar-heatmap text {
 	font-size: 10px;
 	fill: #aaa;
 }
 
-/* .react-calendar-heatmap {
-	width: 75%;
-} */
+.react-calendar-heatmap {
+	height: 375px;
+}
 
 .react-calendar-heatmap .react-calendar-heatmap-small-text {
 	font-size: 5px;

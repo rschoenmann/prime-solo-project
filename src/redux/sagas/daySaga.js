@@ -3,7 +3,7 @@ import {put, takeLatest} from 'redux-saga/effects';
 
 function* editDay(action){
 	try{
-		console.log('editDay action', action.payload)
+		//console.log('editDay action', action.payload)
 		yield axios.put('/api/day', action.payload)
 		yield put({type: 'FETCH_SINGLE_DAY', payload: action.payload.id})
 	} catch (error){
@@ -22,7 +22,7 @@ function* fetchDay() {
 
 function* deleteDay(action){
 	try{
-		console.log('deleteDay action.payload:', action.payload);
+		//console.log('deleteDay action.payload:', action.payload);
 		yield axios.delete(`api/day/${action.payload}`);
 		yield put({type: 'FETCH_DAY'})
 	}catch (error){

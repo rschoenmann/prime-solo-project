@@ -19,7 +19,7 @@ function* fetchUser() {
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({type: 'SET_USER', payload: response.data});
-    console.log('userSaga response.data:', response.data)
+    //console.log('userSaga response.data:', response.data)
   } catch (error) {
     console.log('User get request failed', error);
   }
@@ -27,7 +27,7 @@ function* fetchUser() {
 
 function* updateUser(action) {
   try{
-    console.log('updateUser action.payload', action.payload)
+    //console.log('updateUser action.payload', action.payload)
     yield axios.put('/api/user', action.payload)
     yield put({type: 'FETCH_USER'});
   }catch (error) {

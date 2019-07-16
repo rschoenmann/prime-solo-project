@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, FormControl, Select, MenuItem} from '@material-ui/core';
+import {Button, Select, MenuItem} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
 import './Profile.css';
@@ -71,9 +71,8 @@ class Profile extends Component {
 	};//end saveChanges
 
 	render(){
-		console.log('is profile editable?', this.state.profileEditable)
-		console.log('profile state', this.state)
-		let gradientDisplay;
+		// console.log('is profile editable?', this.state.profileEditable)
+		// console.log('profile state', this.state)
 		return(
 			<div>
 				<h2>{this.props.user.username}'s Profile</h2>
@@ -112,6 +111,8 @@ class Profile extends Component {
 									<Button variant="contained" color="primary" onClick={this.saveChanges}>Save Changes</Button> 
 								</form>
 									)
+								}else{
+									return null
 								}
 							})}
 								
@@ -127,6 +128,8 @@ class Profile extends Component {
 											<div className={this.props.classes.gradientDiv} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${aGradient.colors[0].color}, ${aGradient.colors[4].color}`}}></div>
 										</div>
 									)
+								}else{
+									return null
 								}
 							})}
 							<br></br>

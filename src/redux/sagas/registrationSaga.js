@@ -4,7 +4,7 @@ import axios from 'axios';
 // worker Saga: will be fired on "REGISTER" actions
 function* registerUser(action) {
   try {
-    console.log('registerUser action.payload:', action.payload);
+    //console.log('registerUser action.payload:', action.payload);
     // clear any existing error on the registration page
     yield put({type: 'CLEAR_REGISTRATION_ERROR'});
 

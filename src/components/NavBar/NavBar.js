@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {withStyles} from '@material-ui/styles';
-import {AppBar, Tab, Tabs, Grid, Typography, Button} from '@material-ui/core';
+import {AppBar, Tab, Tabs, Grid} from '@material-ui/core';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 

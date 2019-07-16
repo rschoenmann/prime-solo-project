@@ -3,7 +3,7 @@ import {put, takeLatest} from 'redux-saga/effects';
 
 function* dateRange(action) {
 	try {
-		console.log('stats date action.payload:', action.payload)
+		//console.log('stats date action.payload:', action.payload)
 		let query = `?startDate=${action.payload.startDate}&endDate=${action.payload.endDate}`;
 		const response = yield axios.get(`/api/stats/rating${query}`)
 		yield put({type: 'SET_RATING_STATS', payload: response.data});
@@ -14,7 +14,7 @@ function* dateRange(action) {
 
 function* promptRange(action) {
 	try {
-		console.log('stats prompt action.payload:', action.payload)
+		//console.log('stats prompt action.payload:', action.payload)
 		let query = `?startDate=${action.payload.startDate}&endDate=${action.payload.endDate}`;
 		const response = yield axios.get(`/api/stats/prompts${query}`)
 		yield put({type: 'SET_PROMPT_STATS', payload: response.data});

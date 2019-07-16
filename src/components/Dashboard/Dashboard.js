@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, TextField, Select, MenuItem, FormControl, InputLabel, FormControlLabel, Grid, Typography} from '@material-ui/core';
+import {Button, TextField, Select, MenuItem, FormControl, FormControlLabel, Grid, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/styles';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
@@ -19,14 +19,18 @@ const styles = {
 		marginTop: '20px',
 		marginBottom: '20px',
 	},
-	addDay: {
-	
+	heatmap: {
+		height: '350px',
+		marginLeft: '0px',
 	},
 	menuProps: {
-		maxHeight: 48 * 4.5 + 8,
-		width: 200,
+		width: '150px',
 		marginLeft: '5px',
-		paddingLeft: '10px',
+		marginTop: '10px',
+		paddingLeft: '5px',
+	},
+	gradientLabel: {
+		marginTop: '15px',
 	},
 	selects: {
 		marginTop: '20px',
@@ -47,11 +51,9 @@ class Dashboard extends Component {
 			startDate: '',
 			endDate: '',
 			gradient_id: this.props.user.gradient_id
-			// dates: this.props.days
 		}
 
 	componentDidMount(){
-		this.props.dispatch({type: 'FETCH_DAY'});
 		this.props.dispatch({type: 'FETCH_GRADIENT'});
 		//getDates gets today's date and the date a month ago in order to set initial start and end dates for Heatmap Calendar
 		this.getDates();
@@ -65,6 +67,7 @@ class Dashboard extends Component {
 			endDate: currentDate
 		});
 		this.props.dispatch({type: 'FETCH_DATES', payload: {dateRange: [monthAgo, currentDate]}})
+		this.props.dispatch({type: 'FETCH_DAY'});
 	};//end getNow
 
 	dateChange = propertyName => (event) => {
@@ -130,14 +133,15 @@ class Dashboard extends Component {
 		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
 			
-			<Grid className={classes.root}>
-			<div>
-				<Typography variant="h5" className={classes.head}>Welcome, {this.props.user.username}!</Typography>
-				
-				{addDayButton}
-				<br></br><br></br>
-				
-				<p className={classes.selectTypo}>Select date range to view:</p>
+			<Grid className={classes.root} container>
+
+				<Grid item xs={4}>
+					<Typography variant="h5" className={classes.head}>Welcome, {this.props.user.username}!</Typography>
+					{addDayButton}
+				</Grid>
+
+				<Grid item xs={8}>
+					<p className={classes.selectTypo}>Select date range to view:</p>
 				<TextField className={classes.datePicker}
 					id="startDate"
 					type="date"
@@ -163,31 +167,36 @@ class Dashboard extends Component {
 					})}
 					</Select>}/>
 				</FormControl>
+				</Grid>
+
+				<div className={classes.heatmap}>
+						<CalendarHeatmap  
+							className="heatmap"
+							horizontal={false}
+							startDate={this.state.startDate}
+							endDate={this.state.endDate}
+							values={this.props.day} 
+							classForValue={(value) => {
+								if (!value) {return 'color-empty';}
+								return `color-scale-${this.state.gradient_id}-${value.rating}`;}}
+							showWeekdayLabels={true}
+							weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
+							onClick={this.handleDateClick}
+							transformDayElement={(rect, value, i) => {
+								const tooltip = (
+									<Tooltip id="tooltip">{value ? moment(value.date).format('MMM Do') : ''}</Tooltip>
+								);
+								return (
+									<OverlayTrigger placement="top" overlay={tooltip} key={i}>
+										{rect}
+									</OverlayTrigger>
+								);
+							}}/>
+							<ReactTooltip/>
+				</div>
+			
 				
-				<CalendarHeatmap
-					horizontal={false}
-					startDate={this.state.startDate}
-					endDate={this.state.endDate}
-					values={this.props.day} 
-					classForValue={(value) => {
-						if (!value) {return 'color-empty';}
-						return `color-scale-${this.state.gradient_id}-${value.rating}`;}}
-					showWeekdayLabels={true}
-					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-					onClick={this.handleDateClick}
-					transformDayElement={(rect, value, i) => {
-						const tooltip = (
-							<Tooltip id="tooltip">{value ? moment(value.date).format('MMM Do') : ''}</Tooltip>
-						);
-						return (
-							<OverlayTrigger placement="top" overlay={tooltip} key={i}>
-								{rect}
-							</OverlayTrigger>
-						);
-					}}/>
-					<ReactTooltip/>
-      			
-			</div>
+				
 			</Grid>
 		)
 	}
