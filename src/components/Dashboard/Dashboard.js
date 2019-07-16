@@ -93,7 +93,6 @@ class Dashboard extends Component {
 	}
 
 	dateChangeSubmit = () => {
-		console.log('datechange state:', this.state);
 		this.props.dispatch({type: 'FETCH_DATES', payload: this.state});
 	}
 
@@ -121,8 +120,6 @@ class Dashboard extends Component {
 		const {classes} = this.props;
 		console.log('this.state dashboard', this.state)
 		let addDayButton;
-		// let today = moment().format('YYYY-MM-DD');
-		// let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		let today = moment().format('YYYY-MM-DD');
 		let monthAgo = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		//check to see if there's an entry for today in the database already, if so, don't let user add another entry for today
@@ -137,10 +134,7 @@ class Dashboard extends Component {
 				addDayButton = <Button variant="contained" color="primary" onClick={this.handleAdd} className={classes.addDay}>Rate Today</Button>
 			}
 		}
-
-		// (new Date(this.props.day[i].date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
 		return (
-			
 			<Grid className={classes.root} container>
 
 				<Grid item xs={4}>
@@ -175,7 +169,6 @@ class Dashboard extends Component {
 					})}
 					</Select>}/>	
 				</FormControl>
-<<<<<<< HEAD
 				</Grid>
 
 				<div className={classes.heatmap}>
@@ -204,9 +197,6 @@ class Dashboard extends Component {
 							<ReactTooltip/>
 				</div>
 			
-				
-				
-=======
 				<br></br>
 
 {/* 
@@ -225,32 +215,6 @@ class Dashboard extends Component {
 						</>
 					)
 				})} */}
-                 
-				<CalendarHeatmap
-					horizontal={false}
-					startDate={this.state.startDate}
-					endDate={this.state.endDate}
-					values={this.props.day} 
-					classForValue={(value) => {
-						if (!value) {return 'color-empty';}
-						return `color-scale-${this.state.gradient_id}-${value.rating}`;}}
-					showWeekdayLabels={true}
-					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
-					onClick={this.handleDateClick}
-					transformDayElement={(rect, value, i) => {
-						const tooltip = (
-							<Tooltip id="tooltip">{value ? moment(value.date).format('MMM Do') : ''}</Tooltip>
-						);
-						return (
-							<OverlayTrigger placement="top" overlay={tooltip} key={i}>
-								{rect}
-							</OverlayTrigger>
-						);
-					}}/>
-					<ReactTooltip/>
-      			
-			</div>
->>>>>>> 89bd854a6749aa8e1be4f03f295d641f5a7b426b
 			</Grid>
 		)
 	}

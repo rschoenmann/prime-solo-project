@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 const dayReducer = (state=[], action) => {
 	if(action.type==='SET_DAY'){
 		//console.log('dayreducer ', action.payload);
