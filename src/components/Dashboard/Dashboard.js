@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button, TextField, Select, MenuItem, FormControl, FormControlLabel, Grid, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/styles';
+import {Star, StarBorder} from '@material-ui/icons';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Dashboard.css';
 import moment from 'moment';
@@ -9,11 +10,13 @@ import Swal from 'sweetalert2';
 import ReactTooltip from 'react-tooltip';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Rating from 'react-rating';
 
 const styles = {
 	root: {
 		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
 		marginLeft: '25px',
+		width: '800px'
 	},
 	head: {
 		marginTop: '20px',
@@ -42,6 +45,11 @@ const styles = {
 	selectTypo: {
 		fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
 	},
+	star: {
+		marginTop: '25px',
+		marginRight: '100px',
+		float: 'right'
+	}
 
 };
 
@@ -165,8 +173,9 @@ class Dashboard extends Component {
 							<MenuItem key={gradient.gradientid} className="gradientOption" value={gradient.gradientid} style={{color: 'white', backgroundImage: `linear-gradient(to right, ${gradient.colors[0].color}, ${gradient.colors[4].color}`}}>{gradient.name}</MenuItem>
 						)
 					})}
-					</Select>}/>
+					</Select>}/>	
 				</FormControl>
+<<<<<<< HEAD
 				</Grid>
 
 				<div className={classes.heatmap}>
@@ -197,6 +206,51 @@ class Dashboard extends Component {
 			
 				
 				
+=======
+				<br></br>
+
+{/* 
+			<Rating initialRating={5} className={classes.star}
+				emptySymbol={<StarBorder className={classes.icon}/>}
+				{this.props.gradient.map((aGradient) => {
+					return(
+						 <>
+							{aGradient.colors.map((color, i) => { 
+								return(
+									fullSymbol={<Star className={classes.iconFull}/>}
+									start={0} stop={5} readonly/>
+								)
+							)}}
+
+						</>
+					)
+				})} */}
+                 
+				<CalendarHeatmap
+					horizontal={false}
+					startDate={this.state.startDate}
+					endDate={this.state.endDate}
+					values={this.props.day} 
+					classForValue={(value) => {
+						if (!value) {return 'color-empty';}
+						return `color-scale-${this.state.gradient_id}-${value.rating}`;}}
+					showWeekdayLabels={true}
+					weekdayLabels={['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']}
+					onClick={this.handleDateClick}
+					transformDayElement={(rect, value, i) => {
+						const tooltip = (
+							<Tooltip id="tooltip">{value ? moment(value.date).format('MMM Do') : ''}</Tooltip>
+						);
+						return (
+							<OverlayTrigger placement="top" overlay={tooltip} key={i}>
+								{rect}
+							</OverlayTrigger>
+						);
+					}}/>
+					<ReactTooltip/>
+      			
+			</div>
+>>>>>>> 89bd854a6749aa8e1be4f03f295d641f5a7b426b
 			</Grid>
 		)
 	}

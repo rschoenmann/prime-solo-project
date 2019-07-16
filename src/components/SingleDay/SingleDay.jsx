@@ -93,6 +93,7 @@ class SingleDay extends Component{
 			text: 'Your changes have been saved',
 		});
 		this.props.dispatch({type: 'EDIT_DAY', payload: {id: this.props.match.params.id, notes: this.state.notes}})
+		this.props.history.push('/home')
 	};//end saveEdit
 
 
